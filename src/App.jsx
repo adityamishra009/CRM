@@ -1,9 +1,10 @@
 import React from 'react'
+import MainLayout from './Pages/MainLayout'
 
 const App = () => {
   return (
     <div>
-      <h1 className='text-6xl text-red-500'>Aditya</h1>
+      <MainLayout/>
     </div>
   )
 }
