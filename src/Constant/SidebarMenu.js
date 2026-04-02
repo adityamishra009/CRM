@@ -7,9 +7,29 @@ import {
 } from "lucide-react";
 
 export const sidebarMenu = [
-  { name: "Dashboard", icon: LayoutDashboard },
-  { name: "All Leads", icon: Users },
-  { name: "All Employee", icon: UserCheck },
-  { name: "All Customer", icon: User },
-  { name: "Tax Invoice", icon: FileText },
+  {
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    name: "All Leads",
+    path: "/leads",
+    icon: Users,
+  },
+  {
+    name: "All Employee",
+    path: "/employees",
+    icon: UserCheck,
+  },
+  {
+    name: "All Customer",
+    path: "/customers",
+    icon: User,
+  },
+  {
+    name: "Tax Invoice",
+    path: "/invoice",
+    icon: FileText,
+  },
 ];
