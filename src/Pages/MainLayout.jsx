@@ -4,18 +4,19 @@ import { Outlet } from "react-router-dom";
 
 export default function MainLayout() {
   return (
-    <div>
+    <div className="flex">
+
       {/* Sidebar */}
       <Sidebar />
 
       {/* Right side */}
-      <div className="md:ml-60">
-        
+      <div className="md:ml-60 w-full">
+
         {/* Navbar */}
         <Navbar />
 
         {/* Content */}
-        <div className="p-4">
+        <div className="pt-16 h-screen overflow-y-auto p-4">
           <Outlet />
         </div>
 

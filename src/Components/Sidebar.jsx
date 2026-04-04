@@ -3,9 +3,17 @@ import { Menu, X } from "lucide-react";
 import clsx from "clsx";
 import { NavLink } from "react-router-dom";
 import { sidebarMenu } from "../Constant/SidebarMenu";
+import { useNavigate } from "react-router-dom"; // ✅ add
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+const handleLogout = () => {
+  localStorage.removeItem("isLoggedIn"); // ✅ login remove
+  navigate("/login"); // ✅ login page pe bhej do
+};
 
   return (
     <>
@@ -81,7 +89,7 @@ export default function Sidebar() {
 
         {/* Footer */}
         <div className="p-4 border-t border-[var(--color-border)] text-xs text-[var(--color-text)] bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
-          <button>Logout</button>
+          <button className="cursor-pointer text-black" onClick={handleLogout}>Logout</button>
         </div>
       </aside>
     </>

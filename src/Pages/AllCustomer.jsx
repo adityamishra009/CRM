@@ -1,88 +1,177 @@
 import React, { useState } from "react";
-import { Table,Form } from "antd";
-import AddCustomer from "../Components/AddCustomer"
+import DataTable from "react-data-table-component/dist/index.es.js";
+import { Modal, Button } from "antd";
+import { useForm } from "react-hook-form";
+import AddCustomer from "../Components/AddCustomer";
 import FilterCustomer from "../Components/FilterCustomer";
-import { ChevronsLeft } from 'lucide-react';
+import InputField from "../Components/fields/InputField";
+import BackButton from "../Components/BackButton"
 
 const AllCustomers = () => {
-  const [data,setData] = useState([
+  const [data, setData] = useState([
     {
-      key: 1,
+      id: 1,
       customerName: "Meena Kumari",
       mobileNumber: "9878435602",
       email: "Meena@gmail.com",
       leadDate: "2026-04-01",
     },
     {
-      key: 2,
+      id: 2,
       customerName: "Urvashi Sharma",
       mobileNumber: "7609835685",
       email: "urvshi@gmail.com",
       leadDate: "2026-03-30",
     },
-    {
-      key: 3,
-      customerName: "Twinkle Verma",
-      mobileNumber: "9278005632",
-      email: "twinkle@gmail.com",
-      leadDate: "2026-03-28",
-    },
   ]);
 
-  const handleAddEmployee = (values) => {
-   const newEmployee = {
-    id: data.length + 1,
-    ...values,
+  const [editOpen, setEditOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  // Add
+  const handleAddCustomer = (values) => {
+    const newCustomer = {
+      id: data.length + 1,
+      ...values,
+    };
+    setData([...data, newCustomer]);
   };
 
-  setData([...data, newEmployee]);
+  // Row Click - Open Modal
+  const handleRowClick = (row) => {
+    setSelectedRow(row);
+    setEditOpen(true);
+
+    
+    reset(row);
+  };
+
+  // Update
+  const handleUpdate = (updatedData) => {
+    const newData = data.map((item) =>
+      item.id === selectedRow.id ? { ...item, ...updatedData } : item
+    );
+
+    setData(newData);
+    setEditOpen(false);
+  };
+
+  // Delete
+  const handleDelete = () => {
+    const newData = data.filter((item) => item.id !== selectedRow.id);
+    setData(newData);
+    setEditOpen(false);
   };
 
   const columns = [
     {
-      title: "Customer Name",
-      dataIndex: "customerName",
+      name: "Customer Name",
+      selector: (row) => row.customerName,
+      sortable: true,
     },
     {
-      title: "Mobile Number",
-      dataIndex: "mobileNumber",
+      name: "Mobile Number",
+      selector: (row) => row.mobileNumber,
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      name: "Email",
+      selector: (row) => row.email,
     },
     {
-      title: "Lead Date",
-      dataIndex: "leadDate",
+      name: "Lead Date",
+      selector: (row) => row.leadDate,
     },
   ];
 
   return (
     <div>
-        <div className="flex justify-between items-center mb-5">
-          <div className="flex gap-2 items-center">
-            <button 
-             className="bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] rounded-xl py-2 px-3 cursor-pointer hover:scale-105">
-             <ChevronsLeft />
-            </button>
-            <h1 className="text-2xl font-semibold">Customers</h1>
-          </div>
-            <div className="flex gap-2">
-                <AddCustomer onAddEmployee={handleAddEmployee} />
-                <FilterCustomer />
-            </div>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-5">
+        <div className="flex gap-2 items-center">
+         <BackButton/>
+          <h1 className="text-2xl font-semibold">Customers</h1>
         </div>
-      
 
-      <Table
-        columns={columns} 
-        dataSource={data}
+        <div className="flex gap-2">
+          <AddCustomer onAddCustomer={handleAddCustomer} />
+          <FilterCustomer />
+        </div>
+      </div>
+
+      {/* Table */}
+      <DataTable
+        columns={columns}
+        data={data}
         pagination
-        rowKey="key"
         highlightOnHover
         striped
         responsive
+        onRowClicked={handleRowClick}   
+        pointerOnHover
       />
+
+      {/* Edit Modal */}
+      <Modal
+        title="Edit Customer"
+        open={editOpen}
+        onCancel={() => setEditOpen(false)}
+        footer={null}
+      >
+        <form onSubmit={handleSubmit(handleUpdate)}>
+          
+          <InputField
+            control={control}
+            errors={errors}
+            name="customerName"
+            label="Customer Name"
+            required
+          />
+
+          <InputField
+            control={control}
+            errors={errors}
+            name="mobileNumber"
+            label="Mobile"
+            required
+          />
+
+          <InputField
+            control={control}
+            errors={errors}
+            name="email"
+            type="email"
+            label="Email"
+            required
+          />
+
+          <InputField
+            control={control}
+            errors={errors}
+            name="leadDate"
+            type="date"
+            label="Lead Date"
+            required
+          />
+
+          <div className="flex gap-2 mt-3">
+            <Button type="primary" htmlType="submit" block>
+              Update
+            </Button>
+
+            <Button danger onClick={handleDelete} block>
+              Delete
+            </Button>
+          </div>
+
+        </form>
+      </Modal>
     </div>
   );
 };

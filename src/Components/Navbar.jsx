@@ -6,7 +6,7 @@ import { ChevronDown } from 'lucide-react';
 
 const Navbar = () => {
   return (
-    <div className='bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] w-full'>
+    <div className="fixed top-0 md:left-60 left-0 right-0 z-50 bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
         <div className='flex justify-between items-center py-1 px-2'>
             <div className='p-2'>
                 <button className='hover:cursor-pointer hover:scale-105'>
