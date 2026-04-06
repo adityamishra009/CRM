@@ -18,6 +18,7 @@ export default function Login() {
     if (email === "admin@gmail.com" && password === "1234") {
       localStorage.setItem("isLoggedIn", "true"); // store login
       navigate("/dashboard"); // redirect
+      
     } else {
       alert("Invalid credentials ");
     }
