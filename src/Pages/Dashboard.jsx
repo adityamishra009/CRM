@@ -1,116 +1,154 @@
 import React from "react";
-import { Card, Col, Row, Progress } from "antd";
+import { Card, Row, Col } from "antd";
 import {
-  UserOutlined,
-  CheckCircleOutlined,
-  ClockCircleOutlined,
-  DollarOutlined,
-  RiseOutlined,
-  TeamOutlined,
+  AppstoreOutlined,
+  CalendarOutlined,
 } from "@ant-design/icons";
 
 import RecentLeadsTable from "../Components/RecentLeadsTable";
 import TopCustomersTable from "../Components/TopCustomersTable";
 
+import DashboardChart from "../Components/DashboardChart"
+
 const Dashboard = () => {
-  const data = [
+  const stats = [
     {
-      title: "Total Leads",
-      value: "1,240",
-      extra: "+12%",
-      percent: 70,
-      sub: "This week",
-      icon: <UserOutlined />,
-      color: "linear-gradient(135deg, #4facfe, #00f2fe)",
+      title: "Today's Leads",
+      value: 8,
+      change: "-27.27%",
+      icon: <AppstoreOutlined />,
+      gradient: "linear-gradient(135deg, #1677ff, #69b1ff)",
     },
     {
-      title: "Converted",
-      value: "320",
-      extra: "+8%",
-      percent: 60,
-      sub: "This month",
-      icon: <CheckCircleOutlined />,
-      color: "linear-gradient(135deg, #43e97b, #38f9d7)",
+      title: "Weekly Leads",
+      value: 19,
+      change: "-83.33%",
+      icon: <AppstoreOutlined />,
+      gradient: "linear-gradient(135deg, #fa541c, #ff9c6e)",
     },
     {
-      title: "Pending",
-      value: "210",
-      extra: "-5%",
-      percent: 40,
-      sub: "Follow-ups",
-      icon: <ClockCircleOutlined />,
-      color: "linear-gradient(135deg, #fa709a, #fee140)",
+      title: "Monthly Leads",
+      value: 89,
+      change: "-95.87%",
+      icon: <CalendarOutlined />,
+      gradient: "linear-gradient(135deg, #52c41a, #95de64)",
     },
     {
-      title: "Revenue",
-      value: "₹2.5L",
-      extra: "+20%",
-      percent: 75,
-      sub: "Monthly",
-      icon: <DollarOutlined />,
-      color: "linear-gradient(135deg, #667eea, #764ba2)",
+      title: "Monthly Leads",
+      value: 0,
+      change: "0%",
+      icon: <CalendarOutlined />,
+      gradient: "linear-gradient(135deg, #722ed1, #b37feb)",
     },
     {
-      title: "Growth",
-      value: "+18%",
-      extra: "+3%",
-      percent: 65,
-      sub: "Performance",
-      icon: <RiseOutlined />,
-      color: "linear-gradient(135deg, #00c6ff, #0072ff)",
+      title: "Yesterday's NCBucket Leads",
+      value: 0,
+      change: "0%",
+      icon: <CalendarOutlined />,
+      gradient: "linear-gradient(135deg, #13c2c2, #5cdbd3)",
     },
     {
-      title: "Team",
-      value: "12",
-      extra: "+2",
-      percent: 80,
-      sub: "Active users",
-      icon: <TeamOutlined />,
-      color: "linear-gradient(135deg, #f093fb, #f5576c)",
+      title: "Monthly NCBucket Leads",
+      value: 0,
+      change: "0%",
+      icon: <CalendarOutlined />,
+      gradient: "linear-gradient(135deg, #eb2f96, #ff85c0)",
     },
   ];
 
   return (
-    <div style={{ padding: "20px", background: "#f5f6fa" }}>
-      <Row gutter={[16, 16]}>
-        {data.map((item, index) => (
-          <Col xs={24} sm={12} md={8} key={index}>
+    <div
+      style={{
+        padding: "16px",
+        background: "#f5f7fb",
+        minHeight: "100vh",
+      }}
+    >
+      {/* HEADER */}
+      <h2 style={{ marginBottom: "14px", fontWeight: 600 }}>
+        Leads (77,076)
+      </h2>
+
+      {/* CARDS */}
+      <Row gutter={[12, 12]}>
+        {stats.map((item, index) => (
+          <Col xs={24} sm={12} md={12} lg={8} key={index}>
             <Card
               bordered={false}
               style={{
-                borderRadius: "6px",
+                borderRadius: "12px",
+                background: item.gradient,
                 color: "#fff",
-                background: item.color,
-                boxShadow: "0 6px 18px rgba(0,0,0,0.15)",
-                height: "150px",
+                boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
               }}
               bodyStyle={{ padding: "16px" }}
-              hoverable
             >
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <p style={{ margin: 0, fontWeight: 600 }}>{item.title}</p>
-                  <h2 style={{ margin: "4px 0", fontWeight: 800 }}>{item.value}</h2>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                
+                {/* ICON */}
+                <div
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "8px",
+                    background: "rgba(255,255,255,0.2)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: "16px",
+                    marginRight: "12px",
+                  }}
+                >
+                  {item.icon}
                 </div>
 
-                <div style={{ fontSize: "22px" }}>{item.icon}</div>
-              </div>
+                {/* TEXT */}
+                <div>
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      opacity: 0.9,
+                    }}
+                  >
+                    {item.title}
+                  </div>
 
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span>{item.sub}</span>
-                <span>{item.extra}</span>
-              </div>
+                  <div
+                    style={{
+                      fontSize: "24px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {item.value}
+                  </div>
 
-              <Progress percent={item.percent} showInfo={false} />
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      marginTop: "2px",
+                      opacity: 0.85,
+                    }}
+                  >
+                    {item.change}
+                  </div>
+                </div>
+              </div>
             </Card>
           </Col>
         ))}
       </Row>
 
-      <div style={{ marginTop: "20px" }}>
+      {/* TABLES */}
+      <div style={{ marginTop: "16px" }}>
         <RecentLeadsTable />
+      </div>
+
+      <div style={{ marginTop: "16px" }}>
         <TopCustomersTable />
       </div>
+
+         <DashboardChart/>
+
     </div>
   );
 };

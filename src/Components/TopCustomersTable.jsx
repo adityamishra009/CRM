@@ -2,7 +2,6 @@ import React from "react";
 import DataTableImport from "react-data-table-component";
 const DataTable = DataTableImport.default || DataTableImport;
 
-
 const TopCustomersTable = () => {
   const columns = [
     {
@@ -31,9 +30,43 @@ const TopCustomersTable = () => {
     { name: "Rohit Kumar", email: "rohit@gmail.com", mobile: "8888888888", date: "20 Mar 2026" },
   ];
 
+  // ✅ SAME HEADER STYLE
+  const customStyles = {
+    headRow: {
+      style: {
+        backgroundColor: "#000",
+        minHeight: "50px",
+      },
+    },
+    headCells: {
+      style: {
+        color: "#fff",
+        fontWeight: "700",
+        fontSize: "14px",
+        textTransform: "uppercase",
+        letterSpacing: "0.5px",
+      },
+    },
+  };
+
   return (
-    <div style={{ marginTop: "30px", background: "#fff", padding: "15px", borderRadius: "8px" }}>
-      <h2 style={{ marginBottom: "10px" }}>Top Customers</h2>
+    <div
+      style={{
+        marginTop: "20px",
+        background: "#fff",
+        padding: "16px",
+        borderRadius: "10px",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+      }}
+    >
+      <h2
+        style={{
+          marginBottom: "12px",
+          fontWeight: 600,
+        }}
+      >
+        Top Customers
+      </h2>
 
       <DataTable
         columns={columns}
@@ -41,6 +74,7 @@ const TopCustomersTable = () => {
         pagination
         highlightOnHover
         striped
+        customStyles={customStyles} // 👈 APPLY HERE
       />
     </div>
   );

@@ -5,48 +5,51 @@ import AllLeads from "./Pages/AllLeads";
 import AllEmployees from "./Pages/AllEmployee";
 import AllCustomers from "./Pages/AllCustomer";
 import TaxInvoice from "./Pages/TaxInvoice";
-import PublicRoute from "./Routes/PublicRoute";
-import PrivateRoute from "./Routes/PrivateRoute";
 import Login from "./Pages/Login";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
   return (
     <BrowserRouter>
+
+      <ToastContainer position="top-right" autoClose={2000} />
+
       <Routes>
 
-        {/* ✅ ROOT DECISION */}
+        {/* ✅ ROOT */}
         <Route
           path="/"
           element={
-            isLoggedIn ? (
-              <Navigate to="/dashboard" />
-            ) : (
-              <Navigate to="/login" />
-            )
+            isLoggedIn
+              ? <Navigate to="/dashboard" />
+              : <Navigate to="/login" />
           }
         />
 
-        {/* ✅ Public */}
-        <Route element={<PublicRoute />}>
-          <Route path="/login" element={<Login />} />
-        </Route>
+        {/* ✅ LOGIN */}
+        <Route
+          path="/login"
+          element={
+            isLoggedIn
+              ? <Navigate to="/dashboard" />
+              : <Login />
+          }
+        />
 
-        {/* ✅ Private */}
-        <Route element={<PrivateRoute />}>
-          <Route path="/" element={<MainLayout />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="leads" element={<AllLeads />} />
-            <Route path="employees" element={<AllEmployees />} />
-            <Route path="customers" element={<AllCustomers />} />
-            <Route path="invoice" element={<TaxInvoice/>} />
-          </Route>
+        {/* ✅ MAIN LAYOUT */}
+        <Route path="/" element={<MainLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="leads" element={<AllLeads />} />
+          <Route path="employees" element={<AllEmployees />} />
+          <Route path="customers" element={<AllCustomers />} />
+          <Route path="invoice" element={<TaxInvoice />} />
         </Route>
 
         {/* ✅ fallback */}
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/" />} />
 
       </Routes>
     </BrowserRouter>

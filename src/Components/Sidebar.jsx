@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X,LogOut } from "lucide-react";
 import clsx from "clsx";
 import { NavLink } from "react-router-dom";
 import { sidebarMenu } from "../Constant/SidebarMenu";
 import { useNavigate } from "react-router-dom"; // ✅ add
+import logo1 from "../assets/logo1.png"
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -11,8 +12,8 @@ export default function Sidebar() {
   const navigate = useNavigate();
 
 const handleLogout = () => {
-  localStorage.removeItem("isLoggedIn"); // ✅ login remove
-  navigate("/login"); // ✅ login page pe bhej do
+  localStorage.clear(); // सब साफ
+  window.location.replace("/login");
 };
 
   return (
@@ -45,10 +46,15 @@ const handleLogout = () => {
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-4 border-b border-[var(--color-border)] bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
-          <h1 className="text-lg font-semibold text-[var(--color-text)]">
-            CRM
-          </h1>
+        <div className="flex items-center justify-between px-4 h-13 border-b border-[var(--color-border)] bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
+  
+  <div className="flex items-center h-full">
+    <img
+      src={logo1}
+      alt="logo"
+      className="h-48 w-auto object-contain"
+    />
+  </div>
           <button
             className="md:hidden text-[var(--color-text)]"
             onClick={() => setOpen(false)}
@@ -89,7 +95,7 @@ const handleLogout = () => {
 
         {/* Footer */}
         <div className="p-4 border-t border-[var(--color-border)] text-xs text-[var(--color-text)] bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
-          <button className="cursor-pointer text-black" onClick={handleLogout}>Logout</button>
+          <button className="cursor-pointer text-black flex gap-1" onClick={handleLogout}>Logout <LogOut size={18} /></button>
         </div>
       </aside>
     </>

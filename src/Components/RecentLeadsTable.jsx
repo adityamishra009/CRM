@@ -31,9 +31,41 @@ const RecentLeadsTable = () => {
     { id: "L005", name: "Rohit Kumar", mobile: "8888888888", email: "rohit@gmail.com" },
   ];
 
+  // ✅ CUSTOM STYLE FOR HEADER
+  const customStyles = {
+    headRow: {
+      style: {
+        backgroundColor: "#000", // black background
+        minHeight: "50px",
+      },
+    },
+    headCells: {
+      style: {
+        color: "#fff", // white text
+        fontWeight: "700", // bold
+        fontSize: "14px",
+      },
+    },
+  };
+
   return (
-    <div style={{ marginTop: "30px", background: "#fff", padding: "15px", borderRadius: "8px" }}>
-      <h2 style={{ marginBottom: "10px" }}>Recent Leads</h2>
+    <div
+      style={{
+        marginTop: "20px",
+        background: "#fff",
+        padding: "16px",
+        borderRadius: "10px",
+        boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
+      }}
+    >
+      <h2
+        style={{
+          marginBottom: "12px",
+          fontWeight: 600,
+        }}
+      >
+        Recent Leads
+      </h2>
 
       <DataTable
         columns={columns}
@@ -41,6 +73,7 @@ const RecentLeadsTable = () => {
         pagination
         highlightOnHover
         striped
+        customStyles={customStyles} // 👈 APPLY HERE
       />
     </div>
   );
