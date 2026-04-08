@@ -1,39 +1,33 @@
 import React, { useState } from "react";
 import DataTable from "react-data-table-component/dist/index.es.js";
-import { Modal, Button } from "antd";
-import { useForm } from "react-hook-form";
 import AddCustomer from "../Components/AddCustomer";
 import FilterCustomer from "../Components/FilterCustomer";
-import InputField from "../Components/fields/InputField";
 import BackButton from "../Components/BackButton"
+import EditCustomerModal from "../Components/EditCustomerModal";
+import { MdDelete } from "react-icons/md";
 
 const AllCustomers = () => {
   const [data, setData] = useState([
     {
       id: 1,
+      lpiId:"LPI123",
       customerName: "Meena Kumari",
       mobileNumber: "9878435602",
       email: "Meena@gmail.com",
-      leadDate: "2026-04-01",
+      lastleadDate: "2026-04-01",
     },
     {
       id: 2,
+      lpiId:"LPI4567",
       customerName: "Urvashi Sharma",
       mobileNumber: "7609835685",
       email: "urvshi@gmail.com",
-      leadDate: "2026-03-30",
+      lastleadDate: "2026-03-30",
     },
   ]);
 
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm();
 
   // Add
   const handleAddCustomer = (values) => {
@@ -44,37 +38,50 @@ const AllCustomers = () => {
     setData([...data, newCustomer]);
   };
 
-  // Row Click - Open Modal
-  const handleRowClick = (row) => {
-    setSelectedRow(row);
-    setEditOpen(true);
-
-    
-    reset(row);
-  };
-
-  // Update
+   // ✅ Update
   const handleUpdate = (updatedData) => {
-    const newData = data.map((item) =>
-      item.id === selectedRow.id ? { ...item, ...updatedData } : item
+    if (!selectedRow) return;
+
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === selectedRow.id ? { ...item, ...updatedData } : item
+      )
     );
 
-    setData(newData);
     setEditOpen(false);
+    setSelectedRow(null);
   };
 
-  // Delete
-  const handleDelete = () => {
-    const newData = data.filter((item) => item.id !== selectedRow.id);
-    setData(newData);
-    setEditOpen(false);
-  };
+  // ✅ Delete
+const handleDeleteRow = (id) => {
+  setData((prev) => prev.filter((item) => item.id !== id));
+};
+
+const customStyles = {
+  headRow: {
+    style: {
+      background: "black",
+      borderRadius: "10px",
+      overflow: "hidden",
+    },
+  },
+  headCells: {
+    style: {
+      color: "white",
+      fontWeight: "600",
+    },
+  },
+};
 
   const columns = [
     {
+      name: "LPI ID",
+      selector: (row) => row.lpiId,
+      sortable: true,
+    },
+    {
       name: "Customer Name",
       selector: (row) => row.customerName,
-      sortable: true,
     },
     {
       name: "Mobile Number",
@@ -85,18 +92,38 @@ const AllCustomers = () => {
       selector: (row) => row.email,
     },
     {
-      name: "Lead Date",
-      selector: (row) => row.leadDate,
+      name: "Last Lead Date",
+      selector: (row) => row.lastleadDate,
+    },
+    {
+     name: "Action",
+     cell: (row) => (
+      <div className="flex gap-1">
+      <button
+        onClick={(e) => {
+          e.stopPropagation(); // row click open modal stop karega
+          if (window.confirm("Delete this customer?")) {
+            setSelectedRow(row);
+            handleDeleteRow(row.id);
+          }
+        }}
+        className="flex gap-1 cursor-pointer hover:scale-105 bg-red-500 text-white px-3 py-1 rounded text-sm"
+      >
+        <MdDelete size={20}/>
+        Delete
+      </button>
+      </div>
+    ),
     },
   ];
 
   return (
-    <div>
+    <div className="p-3">
       {/* Header */}
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex justify-between items-center mb-3">
         <div className="flex gap-2 items-center">
          <BackButton/>
-          <h1 className="text-2xl font-semibold">Customers</h1>
+          <h1 className="text-xl font-semibold">Customers</h1>
         </div>
 
         <div className="flex gap-2">
@@ -113,65 +140,25 @@ const AllCustomers = () => {
         highlightOnHover
         striped
         responsive
-        onRowClicked={handleRowClick}   
         pointerOnHover
+        onRowClicked={(row) => {
+          setSelectedRow(row);
+          setEditOpen(true);
+        }}
+        customStyles={customStyles}
       />
 
       {/* Edit Modal */}
-      <Modal
-        title="Edit Customer"
+      <EditCustomerModal
         open={editOpen}
-        onCancel={() => setEditOpen(false)}
-        footer={null}
-      >
-        <form onSubmit={handleSubmit(handleUpdate)}>
-          
-          <InputField
-            control={control}
-            errors={errors}
-            name="customerName"
-            label="Customer Name"
-            required
-          />
-
-          <InputField
-            control={control}
-            errors={errors}
-            name="mobileNumber"
-            label="Mobile"
-            required
-          />
-
-          <InputField
-            control={control}
-            errors={errors}
-            name="email"
-            type="email"
-            label="Email"
-            required
-          />
-
-          <InputField
-            control={control}
-            errors={errors}
-            name="leadDate"
-            type="date"
-            label="Lead Date"
-            required
-          />
-
-          <div className="flex gap-2 mt-3">
-            <Button type="primary" htmlType="submit" block>
-              Update
-            </Button>
-
-            <Button danger onClick={handleDelete} block>
-              Delete
-            </Button>
-          </div>
-
-        </form>
-      </Modal>
+        onClose={() => {
+          setEditOpen(false);
+          setSelectedRow(null);
+        }}
+        selectedRow={selectedRow}
+        onUpdate={handleUpdate}
+        onDelete={handleDeleteRow}
+      />
     </div>
   );
 };

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import AddEmployee from "../Components/AddEmployee";
 import FilterEmployee from "../Components/FilterEmployee";
-import InputField from "../Components/fields/InputField";
-import { ChevronsLeft } from "lucide-react";
 import DataTable from "react-data-table-component/dist/index.es.js";
-import { Modal, Button } from "antd";
-import { useForm } from "react-hook-form";
-import BackButton from "../Components/BackButton"
+import BackButton from "../Components/BackButton";
+import EditEmployeeModal from "../Components/EditEmployeeModal";
+import { MdDelete } from "react-icons/md";
 
 const AllEmployee = () => {
   const [data, setData] = useState([
@@ -29,14 +27,7 @@ const AllEmployee = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm();
-
-  // Add
+  // ✅ Add
   const handleAddEmployee = (values) => {
     const newEmployee = {
       id: data.length + 1,
@@ -45,30 +36,43 @@ const AllEmployee = () => {
     setData([...data, newEmployee]);
   };
 
-  // Row Click
-  const handleRowClick = (row) => {
-    setSelectedRow(row);
-    setEditOpen(true);
-    reset(row); 
-  };
-
-  // Update
+  // ✅ Update
   const handleUpdate = (updatedData) => {
-    const updated = data.map((item) =>
-      item.id === selectedRow.id ? { ...item, ...updatedData } : item
+    if (!selectedRow) return;
+
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === selectedRow.id ? { ...item, ...updatedData } : item
+      )
     );
-    setData(updated);
+
     setEditOpen(false);
+    setSelectedRow(null);
   };
 
-  // Delete
-  const handleDelete = () => {
-    const filtered = data.filter((item) => item.id !== selectedRow.id);
-    setData(filtered);
-    setEditOpen(false);
-  };
 
-  // Columns
+ // ✅ Delete
+const handleDeleteRow = (id) => {
+  setData((prev) => prev.filter((item) => item.id !== id));
+};
+
+const employeeStyles = {
+  headRow: {
+    style: {
+      background: "black",
+      borderRadius: "10px",
+      overflow: "hidden",
+    },
+  },
+  headCells: {
+    style: {
+      color: "white",
+      fontWeight: "600",
+    },
+  },
+};
+
+  // ✅ Columns (NO Edit Button)
   const columns = [
     {
       name: "Name",
@@ -85,7 +89,6 @@ const AllEmployee = () => {
     },
     {
       name: "Profile",
-      selector: (row) => row.profile,
       cell: (row) => (
         <span
           className={`px-2 py-1 rounded ${
@@ -98,17 +101,35 @@ const AllEmployee = () => {
         </span>
       ),
     },
+    {
+      name: "Action",
+      cell: (row) => (
+        <div className="flex gap-1">
+          <button
+            onClick={(e) => {
+            e.stopPropagation(); // row click open modal stop karega
+              if (window.confirm("Delete this employee?")) {
+                setSelectedRow(row);
+                handleDeleteRow(row.id);
+              }
+            }}
+            className="flex gap-1 cursor-pointer hover:scale-105 bg-red-500 text-white px-3 py-1 rounded text-sm"
+          >
+            <MdDelete size={20}/>
+            Delete
+          </button>
+        </div>
+      ),
+    },
   ];
 
   return (
-    <div>
+    <div className="p-3">
       {/* Header */}
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex justify-between items-center mb-3">
         <div className="flex gap-2 items-center">
-          
-            <BackButton/>
-        
-          <h1 className="text-2xl font-semibold">Employee</h1>
+            <BackButton />
+          <h1 className="text-xl font-semibold">Employee</h1>
         </div>
 
         <div className="flex gap-2">
@@ -125,65 +146,25 @@ const AllEmployee = () => {
         highlightOnHover
         striped
         responsive
-        onRowClicked={handleRowClick}   
         pointerOnHover
+        onRowClicked={(row) => {
+          setSelectedRow(row);
+          setEditOpen(true);
+        }}
+        customStyles={employeeStyles} 
       />
 
       {/* Edit Modal */}
-      <Modal
-        title="Edit Employee"
+      <EditEmployeeModal
         open={editOpen}
-        onCancel={() => setEditOpen(false)}
-        footer={null}
-      >
-        <form onSubmit={handleSubmit(handleUpdate)}>
-          
-          <InputField
-            control={control}
-            errors={errors}
-            name="name"
-            label="Name"
-            required
-          />
-
-          <InputField
-            control={control}
-            errors={errors}
-            name="email"
-            type="email"
-            label="Email"
-            required
-          />
-
-          <InputField
-            control={control}
-            errors={errors}
-            name="mobile"
-            label="Mobile"
-            required
-          />
-
-          <InputField
-            control={control}
-            errors={errors}
-            name="profile"
-            label="Profile"
-            placeholder="Active / Inactive"
-            required
-          />
-
-          <div className="flex gap-2 mt-3">
-            <Button type="primary" htmlType="submit" block>
-              Update
-            </Button>
-
-            <Button danger onClick={handleDelete} block>
-              Delete
-            </Button>
-          </div>
-
-        </form>
-      </Modal>
+        onClose={() => {
+          setEditOpen(false);
+          setSelectedRow(null);
+        }}
+        selectedRow={selectedRow}
+        onUpdate={handleUpdate}
+        onDelete={handleDeleteRow} 
+      />
     </div>
   );
 };

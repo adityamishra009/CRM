@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import DataTable from "react-data-table-component/dist/index.es.js";
 import FilterLead from "../Components/FilterLead"
-
 import AddLead from "../Components/AddLead";
 import ExportBtn from "../Components/ExportBtn";
 import BulkUploadBtn from "../Components/BulkUploadBtn";
-import { Modal, Button } from "antd";
-import { useForm } from "react-hook-form";
-import InputField from "../Components/fields/InputField";
 import BackButton from "../Components/BackButton";
+import EditLeadModal from "../Components/EditLeadModal";
 
 const AllLeads = () => {
   const [data, setData] = useState([
@@ -37,15 +34,8 @@ const AllLeads = () => {
     },
   ]);
 
-  const [editOpen, setEditOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
-
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm();
+    const [editOpen, setEditOpen] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
 
   // Add Lead
   const handleAddLead = (values) => {
@@ -56,49 +46,68 @@ const AllLeads = () => {
     setData([...data, newLead]);
   };
 
-  // Row Click
-  const handleRowClick = (row) => {
-    setSelectedRow(row);
-    setEditOpen(true);
-    reset(row); 
-  };
-
-  // Update
+  // ✅ Update
   const handleUpdate = (updatedData) => {
-    const updated = data.map((item) =>
-      item.id === selectedRow.id ? { ...item, ...updatedData } : item
+    if (!selectedRow) return;
+
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === selectedRow.id ? { ...item, ...updatedData } : item
+      )
     );
-    setData(updated);
+
     setEditOpen(false);
+    setSelectedRow(null);
   };
 
-  // Delete
-  const handleDelete = () => {
-    const filtered = data.filter((item) => item.id !== selectedRow.id);
-    setData(filtered);
-    setEditOpen(false);
-  };
+  // ✅ Delete
+const handleDelete = () => {
+  if (!selectedRow) return;
+
+  setData((prev) =>
+    prev.filter((item) => item.id !== selectedRow.id)
+  );
+
+  setEditOpen(false);
+  setSelectedRow(null);
+};
+
+const leadStyles = {
+  headRow: {
+    style: {
+      background: "black",
+      borderRadius: "10px",
+      overflow: "hidden",
+    },
+  },
+  headCells: {
+    style: {
+      color: "white",
+      fontWeight: "600",
+    },
+  },
+};
 
   // Columns
   const columns = [
-    { name: "Lead ID", selector: (row) => row.leadId, sortable: true },
-    { name: "Date", selector: (row) => row.date },
-    { name: "Name", selector: (row) => row.name },
-    { name: "Mobile", selector: (row) => row.mobileNumber },
-    { name: "Email", selector: (row) => row.emailId },
-    { name: "Service", selector: (row) => row.serviceCategary },
-    { name: "Sales Status", selector: (row) => row.salesStatus },
-    { name: "Operation Status", selector: (row) => row.operationStatus },
-    { name: "Payments", selector: (row) => row.totalPayments },
-  ];
+  { name: "Lead ID", selector: (row) => row.leadId, wrap: true, grow: 1 },
+  { name: "Date", selector: (row) => row.date, wrap: true, grow: 2 },
+  { name: "Name", selector: (row) => row.name, wrap: true },
+  { name: "Mobile", selector: (row) => row.mobileNumber },
+  { name: "Email", selector: (row) => row.emailId, wrap: true, grow: 2 },
+  { name: "Service", selector: (row) => row.serviceCategary },
+  { name: "Sales Status", selector: (row) => row.salesStatus },
+  { name: "Operation Status", selector: (row) => row.operationStatus, wrap: true },
+  { name: "Payments", selector: (row) => row.totalPayments },
+];
 
   return (
-    <div>
+    <div className="mt-3">
       {/* Header */}
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex justify-between items-center mb-3">
         <div className="flex gap-2 items-center">
           <BackButton/>
-          <h1 className="text-2xl font-semibold">Leads</h1>
+          <h1 className="text-xl font-semibold">Leads</h1>
         </div>
 
         <div className="flex gap-2">
@@ -116,42 +125,26 @@ const AllLeads = () => {
         pagination
         highlightOnHover
         striped
-        responsive
-        onRowClicked={handleRowClick}   
+        responsive  
         pointerOnHover
+        onRowClicked={(row) => {
+          setSelectedRow(row);
+          setEditOpen(true);
+        }}
+        customStyles={leadStyles}
       />
-
-      {/* Edit Modal */}
-      <Modal
-        title="Edit Lead"
+      
+      {/* Edit lead */}
+      <EditLeadModal
         open={editOpen}
-        onCancel={() => setEditOpen(false)}
-        footer={null}
-      >
-        <form onSubmit={handleSubmit(handleUpdate)}>
-
-          <InputField control={control} errors={errors} name="leadId" label="Lead ID" required />
-          <InputField control={control} errors={errors} name="date" label="Date" required />
-          <InputField control={control} errors={errors} name="name" label="Name" required />
-          <InputField control={control} errors={errors} name="mobileNumber" label="Mobile" required />
-          <InputField control={control} errors={errors} name="emailId" label="Email" required />
-          <InputField control={control} errors={errors} name="serviceCategary" label="Service" required />
-          <InputField control={control} errors={errors} name="salesStatus" label="Sales Status" required />
-          <InputField control={control} errors={errors} name="operationStatus" label="Operation Status" required />
-          <InputField control={control} errors={errors} name="totalPayments" label="Total Payments" required />
-
-          <div className="flex gap-2 mt-3">
-            <Button type="primary" htmlType="submit" block>
-              Update
-            </Button>
-
-            <Button danger onClick={handleDelete} block>
-              Delete
-            </Button>
-          </div>
-
-        </form>
-      </Modal>
+        onClose={() => {
+          setEditOpen(false);
+          setSelectedRow(null);
+        }}
+        selectedRow={selectedRow}
+        onUpdate={handleUpdate}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };
