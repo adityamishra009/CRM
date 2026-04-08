@@ -52,7 +52,7 @@ const handleLogout = () => {
     <img
       src={logo1}
       alt="logo"
-      className="h-48 w-auto object-contain"
+      className="h-50  w-auto object-contain"
     />
   </div>
           <button
