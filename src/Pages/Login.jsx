@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import InputField from "../Components/fields/InputField";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import logo1 from "../assets/logo1.png";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,7 +16,6 @@ export default function Login() {
   const onSubmit = (data) => {
     const { email, password } = data;
 
-    // ✅ hardcoded login
     if (email === "admin@gmail.com" && password === "1234") {
       localStorage.setItem("isLoggedIn", "true");
 
@@ -24,7 +24,6 @@ export default function Login() {
       setTimeout(() => {
         navigate("/dashboard");
       }, 1500);
-
     } else {
       toast.error("Invalid credentials ❌");
     }
@@ -33,13 +32,19 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
       
-      <div className="w-full max-w-md p-8 rounded-xl border border-[var(--color-border)]  backdrop-blur-md text-white [--color-text:#f3f4f6] [--color-border:#d1d5db]">
+      <div className=" w-full max-w-md p-8 rounded-xl border border-[var(--color-border)] backdrop-blur-md text-white [&_*]:text-white [--color-border:#d1d5db]">
 
-        <h1 className="text-2xl font-semibold text-center text-[var(--color-text)] mb-6">
-          Login
-        </h1>
+        {/* ✅ Bigger logo (height + width controlled) */}
+      <img
+  src={logo1}
+  alt="logo"
+  className="h-40 w-auto max-w-[300px] mx-auto mb-0 object-contain"
+/>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
+
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-0 pt-0 login-form ">
+          
 
           <InputField
             name="email"
@@ -48,6 +53,7 @@ export default function Login() {
             errors={errors}
             label="Email"
             placeholder="Enter your email"
+            
           />
 
           <InputField
@@ -68,6 +74,9 @@ export default function Login() {
 
         </form>
       </div>
+
+      
+    
     </div>
   );
 }

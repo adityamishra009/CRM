@@ -8,3 +8,19 @@
   --color-text: #ffffff; /* white */
   --color-border: #1f2937; /* dark gray */
 }
+
+
+.login-form input {
+  color: white !important;
+}
+
+.login-form input::placeholder {
+  color: rgba(255,255,255,0.7) !important;
+}
+
+.login-form label {
+  color: white !important;
+}
+
+
+
