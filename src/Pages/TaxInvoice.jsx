@@ -15,9 +15,10 @@ import {
 
 import InputField from "../Components/fields/InputField";
 import BackButton from "../Components/BackButton"
-
 import DataTableImport from "react-data-table-component";
 const DataTable = DataTableImport.default || DataTableImport;
+import PrevBtn from "../Components/PrevBtn";
+import HButton from "../Components/HButton";
 
 // ─── Sample data ──────────────────────────────────────────────────────────────
 const existingInvoices = [
@@ -218,32 +219,26 @@ const TaxInvoice = () => {
           </div>
 
           {/* Right: all buttons — space-between keeps them on right side */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-            <button onClick={() => message.info("Tax Invoice No clicked")}
-              style={hBtn("#3b82f6")}
-              onMouseEnter={e => e.currentTarget.style.filter = "brightness(0.85)"}
-              onMouseLeave={e => e.currentTarget.style.filter = "none"}>
+          
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+  
+        <HButton onClick={() => message.info("Tax Invoice No clicked")}>
               <FileTextOutlined /> Tax Invoice No
-            </button>
-            <button onClick={() => setView("form")}
-              style={hBtn("#16a34a")}
-              onMouseEnter={e => e.currentTarget.style.filter = "brightness(0.85)"}
-              onMouseLeave={e => e.currentTarget.style.filter = "none"}>
-              <PlusOutlined /> Generate Invoice
-            </button>
-            <button onClick={() => message.info("Exporting…")}
-              style={hBtn("#3b82f6")}
-              onMouseEnter={e => e.currentTarget.style.filter = "brightness(0.85)"}
-              onMouseLeave={e => e.currentTarget.style.filter = "none"}>
-              <ExportOutlined /> Export Excel
-            </button>
-            <button onClick={() => message.info("Filter clicked")}
-              style={hBtn("#3b82f6")}
-              onMouseEnter={e => e.currentTarget.style.filter = "brightness(0.85)"}
-              onMouseLeave={e => e.currentTarget.style.filter = "none"}>
+                            </HButton>
+
+            <HButton onClick={() => setView("form")}>
+               <PlusOutlined /> Generate Invoice
+                       </HButton>
+
+                <HButton onClick={() => message.info("Exporting…")}>
+                  <ExportOutlined /> Export Excel
+                        </HButton>
+
+           <HButton onClick={() => message.info("Filter clicked")}>
               <FilterOutlined /> Filter
-            </button>
-          </div>
+                         </HButton>
+
+                  </div>
         </div>
 
         {/* ── Table: fills remaining height, ONLY this scrolls ── */}
@@ -279,18 +274,8 @@ const TaxInvoice = () => {
   return (
     <div style={{ padding: "16px 20px", height: "100vh", overflowY: "auto", boxSizing: "border-box" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
-        <button
-          onClick={() => { reset(); setView("list"); }}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: "4px",
-            backgroundColor: "#e5e7eb", border: "none", borderRadius: "6px",
-            padding: "6px 12px", fontSize: "13px", fontWeight: 500, cursor: "pointer",
-          }}
-          onMouseEnter={e => e.currentTarget.style.backgroundColor = "#d1d5db"}
-          onMouseLeave={e => e.currentTarget.style.backgroundColor = "#e5e7eb"}
-        >
-          <ArrowLeftOutlined /> Back
-        </button>
+       <PrevBtn onClick={() => setView("list")}/>
+        
         <h2 style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: 0 }}>
           Create Tax Invoice
         </h2>

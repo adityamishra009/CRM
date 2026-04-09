@@ -21,7 +21,7 @@ const handleLogout = () => {
       {/* Mobile button */}
       <button
         onClick={() => setOpen(true)}
-        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-[var(--color-text)]"
+        className="md:hidden fixed top-3 left-3 z-50 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-[var(--color-text)]"
       >
         <Menu size={18} />
       </button>

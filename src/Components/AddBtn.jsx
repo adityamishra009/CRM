@@ -6,7 +6,15 @@ const AddBtn = ({ onAdd }) => {
     <div className="w-full">
       <button
         onClick={onAdd}
-        className="rounded-xl px-4 py-3 bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] text-black cursor-pointer hover:scale-105 w-full sm:w-auto"
+        className="flex items-center gap-[6px]
+                   px-[14px] py-[8px]
+                   rounded-md
+                   bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]
+                   text-white
+                   cursor-pointer
+                   transition-all duration-200
+                   hover:brightness-90
+                   w-full sm:w-auto"
       >
         <FaPlus />
       </button>

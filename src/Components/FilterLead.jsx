@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Drawer, Button } from "antd";
+import { Drawer } from "antd";
 import { useForm } from "react-hook-form";
-import FilterButton from "./Filterbtn";
+import FilterButton from "../Components/FilterBtn";
 import InputField from "./fields/InputField";
 
 const FilterLead = () => {
@@ -90,14 +90,38 @@ const FilterLead = () => {
             />
           </div>
 
-          <div className="flex gap-2">
-            <Button type="primary" htmlType="submit" block>
+          {/* ✅ Updated Buttons */}
+          <div className="flex gap-[6px] mt-4">
+            
+            <button
+              type="submit"
+              className="flex-1 flex items-center justify-center gap-[6px]
+                         px-[14px] py-[8px]
+                         rounded-md
+                         bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]
+                         text-white
+                         cursor-pointer
+                         transition-all duration-200
+                         hover:brightness-90"
+            >
               Apply
-            </Button>
+            </button>
 
-            <Button onClick={() => reset()} block>
+            <button
+              type="button"
+              onClick={() => reset()}
+              className="flex-1 flex items-center justify-center gap-[6px]
+                         px-[14px] py-[8px]
+                         rounded-md
+                         bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]
+                         text-white
+                         cursor-pointer
+                         transition-all duration-200
+                         hover:brightness-90"
+            >
               Reset
-            </Button>
+            </button>
+
           </div>
 
         </form>

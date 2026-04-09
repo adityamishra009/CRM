@@ -16,7 +16,7 @@ export default function MainLayout() {
         <Navbar />
 
         {/* Content */}
-        <div className="pt-16 h-screen overflow-y-auto p-4">
+        <div className="pt-16  min-h-screen overflow-y-auto p-4">
           <Outlet />
         </div>
 
