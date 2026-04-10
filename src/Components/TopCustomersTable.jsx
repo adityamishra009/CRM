@@ -42,7 +42,7 @@ const TopCustomersTable = () => {
       style: {
         color: "#fff",
         fontWeight: "700",
-        fontSize: "14px",
+        fontSize: "12px",
         textTransform: "uppercase",
         letterSpacing: "0.5px",
       },

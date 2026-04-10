@@ -29,7 +29,7 @@ const AllCustomers = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  // Add
+  
   const handleAddCustomer = (values) => {
     const newCustomer = {
       id: data.length + 1,
@@ -38,7 +38,7 @@ const AllCustomers = () => {
     setData([...data, newCustomer]);
   };
 
-   // ✅ Update
+  
   const handleUpdate = (updatedData) => {
     if (!selectedRow) return;
 
@@ -52,7 +52,7 @@ const AllCustomers = () => {
     setSelectedRow(null);
   };
 
-  // ✅ Delete
+
 const handleDeleteRow = (id) => {
   setData((prev) => prev.filter((item) => item.id !== id));
 };
@@ -68,7 +68,9 @@ const customStyles = {
   headCells: {
     style: {
       color: "white",
-      fontWeight: "600",
+      fontWeight: "700",
+      fontSize: "12px",
+       textTransform: "uppercase",
     },
   },
 };
@@ -101,7 +103,7 @@ const customStyles = {
       <div className="flex gap-1">
       <button
         onClick={(e) => {
-          e.stopPropagation(); // row click open modal stop karega
+          e.stopPropagation(); 
           if (window.confirm("Delete this customer?")) {
             setSelectedRow(row);
             handleDeleteRow(row.id);
@@ -119,7 +121,7 @@ const customStyles = {
 
   return (
     <div className="p-3">
-      {/* Header */}
+      
       <div className="flex justify-between items-center mb-3">
         <div className="flex gap-2 items-center">
          <BackButton/>
@@ -132,7 +134,7 @@ const customStyles = {
         </div>
       </div>
 
-      {/* Table */}
+      
       <DataTable
         columns={columns}
         data={data}
@@ -148,7 +150,7 @@ const customStyles = {
         customStyles={customStyles}
       />
 
-      {/* Edit Modal */}
+      
       <EditCustomerModal
         open={editOpen}
         onClose={() => {

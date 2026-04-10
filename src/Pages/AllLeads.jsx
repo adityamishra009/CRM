@@ -83,7 +83,9 @@ const leadStyles = {
   headCells: {
     style: {
       color: "white",
-      fontWeight: "600",
+      fontWeight: "700",
+        fontSize: "12px",
+       textTransform: "uppercase",
     },
   },
 };

@@ -20,17 +20,23 @@ const handleLogout = () => {
     <>
       {/* Mobile button */}
       <button
-        onClick={() => setOpen(true)}
-        className="md:hidden fixed top-3 left-3 z-50 p-2 bg-[var(--color-bg)] border border-[var(--color-border)] rounded text-[var(--color-text)]"
-      >
-        <Menu size={18} />
-      </button>
+  onClick={() => setOpen(true)}
+  className="md:hidden fixed top-2 left-3 z-50 
+  p-1.5 rounded-lg 
+  bg-white/10 backdrop-blur-md 
+  border border-white/20 
+  shadow-lg 
+  hover:scale-105 active:scale-95 
+  transition"
+>
+  <Menu size={20} className="text-black" />
+</button>
 
       {/* Overlay */}
       {open && (
         <div
           onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-black/30 z-40 md:hidden"
+          className="fixed inset-0 bg-black/30 z-30 md:hidden"
         />
       )}
 

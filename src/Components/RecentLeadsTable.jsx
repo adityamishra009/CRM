@@ -31,19 +31,20 @@ const RecentLeadsTable = () => {
     { id: "L005", name: "Rohit Kumar", mobile: "8888888888", email: "rohit@gmail.com" },
   ];
 
-  // ✅ CUSTOM STYLE FOR HEADER
+  
   const customStyles = {
     headRow: {
       style: {
-        backgroundColor: "#000", // black background
+        backgroundColor: "#000", 
         minHeight: "50px",
       },
     },
     headCells: {
       style: {
-        color: "#fff", // white text
-        fontWeight: "700", // bold
-        fontSize: "14px",
+        color: "#fff", 
+        fontWeight: "700", 
+        fontSize: "12px",
+         textTransform: "uppercase",
       },
     },
   };
@@ -73,7 +74,7 @@ const RecentLeadsTable = () => {
         pagination
         highlightOnHover
         striped
-        customStyles={customStyles} // 👈 APPLY HERE
+        customStyles={customStyles} 
       />
     </div>
   );

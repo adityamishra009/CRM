@@ -10,18 +10,18 @@ const Navbar = () => {
         <div className='flex justify-between items-center py-0 px-2 pl-12 md:pl-2'>
             <div className='p-2'>
                 <button className='hover:cursor-pointer hover:scale-105'>
-                    <FiSearch size={30}/>
+                    <FiSearch size={26}/>
                 </button>
             </div>
             <div className='flex gap-5'>
                 <div className='p-2'>
                     <button className='hover:cursor-pointer hover:scale-105'>
-                       <FaRegBell size={30}/>
+                       <FaRegBell size={26}/>
                     </button>
                 </div>
                 <div className='flex items-center gap-1'>
                     <button className='hover:cursor-pointer hover:scale-105'>
-                       <UserPen size={30}/>
+                       <UserPen size={26}/>
                     </button>
                     <button className='hover:cursor-pointer hover:scale-105'>
                        <ChevronDown size={20}/>

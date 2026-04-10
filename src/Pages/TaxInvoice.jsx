@@ -20,7 +20,7 @@ const DataTable = DataTableImport.default || DataTableImport;
 import PrevBtn from "../Components/PrevBtn";
 import HButton from "../Components/HButton";
 
-// ─── Sample data ──────────────────────────────────────────────────────────────
+
 const existingInvoices = [
   { id: "LPI2026-1168", name: "RAJ INDUSTRIES", mobile: "9892105126",  gstNo: "27AYSPS4552M1ZG", date: "31/03/2026", services: "IEC Renewal" },
   { id: "LPI2026-1167", name: "RICHA LIFESTYLE ",          mobile: "08178799197", gstNo: "09ABGFR9238L1ZG", date: "02/04/2026", services: "Startup India Certificate, AD Code" },
@@ -54,7 +54,7 @@ const ServiceCell = ({ value }) => (
   </Tooltip>
 );
 
-// ─── Action buttons ───────────────────────────────────────────────────────────
+
 const ActionButtons = ({ onPreview, onDownload, onEdit, onDelete }) => (
   <div style={{ display: "flex", alignItems: "center", gap: "3px", flexWrap: "nowrap" }}>
     {[
@@ -79,7 +79,7 @@ const ActionButtons = ({ onPreview, onDownload, onEdit, onDelete }) => (
   </div>
 );
 
-// ─── Header button style helper ───────────────────────────────────────────────
+
 const hBtn = (bg) => ({
   display: "inline-flex", alignItems: "center", gap: "6px",
   backgroundColor: bg, color: "#fff", border: "none", borderRadius: "6px",
@@ -88,22 +88,22 @@ const hBtn = (bg) => ({
   boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
 });
 
-// ════════════════════════════════════════════════════════════════════════════
+
 const TaxInvoice = () => {
   const [view, setView] = useState("list");
   const headerRef = useRef(null);
   const [scrollH, setScrollH] = useState("500px");
 
-  // Recalculate table scroll height whenever view changes / window resizes
+  
   useEffect(() => {
     const calc = () => {
       if (headerRef.current) {
         const hh = headerRef.current.getBoundingClientRect().height;
-        // 16px top pad + hh + 12px gap + 2px border buffer
+        
         setScrollH(`calc(100vh - ${hh + 78}px)`);
       }
     };
-    // slight delay so DOM has painted
+  
     const t = setTimeout(calc, 50);
     window.addEventListener("resize", calc);
     return () => { clearTimeout(t); window.removeEventListener("resize", calc); };
@@ -120,7 +120,7 @@ const TaxInvoice = () => {
     setView("list");
   };
 
-  // ── Table styles ──────────────────────────────────────────────────────────
+  
   const tStyles = {
     table: { style: { width: "100%" } },
     headRow: {
@@ -129,13 +129,7 @@ const TaxInvoice = () => {
         fontWeight: "600", fontSize: "12px", minHeight: "40px",
       },
     },
-    headCells: { style: { color: "#fff", paddingLeft: "8px", paddingRight: "4px" } },
-    cells: {
-      style: {
-        paddingLeft: "8px", paddingRight: "4px",
-        paddingTop: "6px", paddingBottom: "6px", fontSize: "11.5px",
-      },
-    },
+   headCells: { style: { color: "#fff", paddingLeft: "8px", paddingRight: "4px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", fontSize:"12px" } },
     rows: {
       style: { borderBottom: "1px solid #e5e7eb", minHeight: "44px" },
       stripedStyle: { backgroundColor: "#f9fafb" },
@@ -149,7 +143,7 @@ const TaxInvoice = () => {
     },
   };
 
-  // ── Columns — slim widths, no horizontal scroll ───────────────────────────
+  
   const cols = [
     {
       name: "Invoice No", selector: r => r.id, sortable: true, width: "100px",
@@ -188,23 +182,21 @@ const TaxInvoice = () => {
     },
   ];
 
-  // ══════════════════════════════════════════════════════════════════════════
-  //  LIST VIEW
-  // ══════════════════════════════════════════════════════════════════════════
+  
   if (view === "list") {
     return (
       <div style={{
         display: "flex", flexDirection: "column",
-        height: "100vh", overflow: "hidden",   // ← PAGE never scrolls
+        height: "100vh", overflow: "hidden",   
         padding: "16px 20px 12px", boxSizing: "border-box",
       }}>
 
-        {/* ── Header: title left, buttons right (space-between) ── */}
+      
         <div ref={headerRef} style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           flexWrap: "wrap", gap: "10px", marginBottom: "12px", flexShrink: 0,
         }}>
-          {/* Left: back + title */}
+        
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             
 
@@ -218,7 +210,7 @@ const TaxInvoice = () => {
             </h2>
           </div>
 
-          {/* Right: all buttons — space-between keeps them on right side */}
+          
           
             <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
   
@@ -241,7 +233,7 @@ const TaxInvoice = () => {
                   </div>
         </div>
 
-        {/* ── Table: fills remaining height, ONLY this scrolls ── */}
+        
         <div style={{
           flex: 1, minHeight: 0,
           borderRadius: "8px", overflow: "hidden",
@@ -259,7 +251,7 @@ const TaxInvoice = () => {
             fixedHeaderScrollHeight={scrollH}
             customStyles={tStyles}
             noDataComponent={
-              <div style={{ padding: "40px", color: "#9ca3af", fontSize: "13px" }}>No invoices found.</div>
+              <div style={{ padding: "40px", color: "#9ca3af", fontSize: "13px " }}>No invoices found.</div>
             }
           />
         </div>
@@ -268,9 +260,7 @@ const TaxInvoice = () => {
     );
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
-  //  FORM VIEW
-  // ══════════════════════════════════════════════════════════════════════════
+  
   return (
     <div style={{ padding: "16px 20px", height: "100vh", overflowY: "auto", boxSizing: "border-box" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>

@@ -27,7 +27,6 @@ const AllEmployee = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  // ✅ Add
   const handleAddEmployee = (values) => {
     const newEmployee = {
       id: data.length + 1,
@@ -36,7 +35,7 @@ const AllEmployee = () => {
     setData([...data, newEmployee]);
   };
 
-  // ✅ Update
+  
   const handleUpdate = (updatedData) => {
     if (!selectedRow) return;
 
@@ -51,7 +50,7 @@ const AllEmployee = () => {
   };
 
 
- // ✅ Delete
+ 
 const handleDeleteRow = (id) => {
   setData((prev) => prev.filter((item) => item.id !== id));
 };
@@ -62,17 +61,20 @@ const employeeStyles = {
       background: "black",
       borderRadius: "10px",
       overflow: "hidden",
+      
     },
   },
   headCells: {
     style: {
       color: "white",
-      fontWeight: "600",
+      fontWeight: "700",
+      fontSize: "12px",
+       textTransform: "uppercase",
     },
   },
 };
 
-  // ✅ Columns (NO Edit Button)
+  
   const columns = [
     {
       name: "Name",
@@ -107,7 +109,7 @@ const employeeStyles = {
         <div className="flex gap-1">
           <button
             onClick={(e) => {
-            e.stopPropagation(); // row click open modal stop karega
+            e.stopPropagation(); 
               if (window.confirm("Delete this employee?")) {
                 setSelectedRow(row);
                 handleDeleteRow(row.id);
@@ -125,7 +127,7 @@ const employeeStyles = {
 
   return (
     <div className="p-3">
-      {/* Header */}
+      
       <div className="flex justify-between items-center mb-3">
         <div className="flex gap-2 items-center">
             <BackButton />
@@ -138,7 +140,7 @@ const employeeStyles = {
         </div>
       </div>
 
-      {/* Table */}
+      
       <DataTable
         columns={columns}
         data={data}
@@ -154,7 +156,7 @@ const employeeStyles = {
         customStyles={employeeStyles} 
       />
 
-      {/* Edit Modal */}
+      
       <EditEmployeeModal
         open={editOpen}
         onClose={() => {
