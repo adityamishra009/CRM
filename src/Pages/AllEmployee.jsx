@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component/dist/index.es.js";
 import BackButton from "../Components/BackButton";
 import EditEmployeeModal from "../Components/EditEmployeeModal";
 import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const AllEmployee = () => {
   const [data, setData] = useState([
@@ -27,6 +28,7 @@ const AllEmployee = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
+  // ✅ Add
   const handleAddEmployee = (values) => {
     const newEmployee = {
       id: data.length + 1,
@@ -35,7 +37,7 @@ const AllEmployee = () => {
     setData([...data, newEmployee]);
   };
 
-  
+  // ✅ Update
   const handleUpdate = (updatedData) => {
     if (!selectedRow) return;
 
@@ -50,31 +52,51 @@ const AllEmployee = () => {
   };
 
 
- 
-const handleDeleteRow = (id) => {
-  setData((prev) => prev.filter((item) => item.id !== id));
+ // ✅ Delete
+const handleDelete = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      setData(data.filter((item) => item.id !== id));
+
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your record has been deleted.",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  });
 };
 
 const employeeStyles = {
   headRow: {
     style: {
       background: "black",
-      borderRadius: "10px",
+      borderTopRightRadius: "10px",
+      borderTopLeftRadius: "10px",
       overflow: "hidden",
-      
     },
   },
   headCells: {
     style: {
       color: "white",
-      fontWeight: "700",
-      fontSize: "12px",
-       textTransform: "uppercase",
+      fontWeight: "600",
+      textTransform: "uppercase",
+      fontSize: "14px",
     },
   },
 };
 
-  
+  // ✅ Columns (NO Edit Button)
   const columns = [
     {
       name: "Name",
@@ -108,14 +130,8 @@ const employeeStyles = {
       cell: (row) => (
         <div className="flex gap-1">
           <button
-            onClick={(e) => {
-            e.stopPropagation(); 
-              if (window.confirm("Delete this employee?")) {
-                setSelectedRow(row);
-                handleDeleteRow(row.id);
-              }
-            }}
-            className="flex gap-1 cursor-pointer hover:scale-105 bg-red-500 text-white px-3 py-1 rounded text-sm"
+            onClick={()=>handleDelete(row.id)}
+            className="flex items-center gap-1 cursor-pointer hover:scale-105 bg-red-500 text-white px-2 py-1 rounded text-sm sm:px-3 sm:text-sm whitespace-nowrap"
           >
             <MdDelete size={20}/>
             Delete
@@ -126,21 +142,21 @@ const employeeStyles = {
   ];
 
   return (
-    <div className="p-3">
-      
-      <div className="flex justify-between items-center mb-3">
+    <div className="mt-5 bg-white p-3 sm:p-4 rounded-lg shadow-sm">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-3">
         <div className="flex gap-2 items-center">
             <BackButton />
           <h1 className="text-xl font-semibold">Employee</h1>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           <AddEmployee onAddEmployee={handleAddEmployee} />
           <FilterEmployee />
         </div>
       </div>
 
-      
+      {/* Table */}
       <DataTable
         columns={columns}
         data={data}
@@ -156,7 +172,7 @@ const employeeStyles = {
         customStyles={employeeStyles} 
       />
 
-      
+      {/* Edit Modal */}
       <EditEmployeeModal
         open={editOpen}
         onClose={() => {
@@ -165,7 +181,7 @@ const employeeStyles = {
         }}
         selectedRow={selectedRow}
         onUpdate={handleUpdate}
-        onDelete={handleDeleteRow} 
+        onDelete={handleDelete} 
       />
     </div>
   );

@@ -36,7 +36,6 @@ const existingInvoices = [
   { id: "LPI2026-1157", name: "GREEN EARTH EXPORTS",             mobile: "9654321098",  gstNo: "29XYZAB5678C1ZQ", date: "18/03/2026", services: "AD Code, IEC Renewal" },
 ];
 
-// ─── Services: 1-line clamp with tooltip ─────────────────────────────────────
 const ServiceCell = ({ value }) => (
   <Tooltip title={value} placement="topLeft" mouseEnterDelay={0.3}>
     <span style={{
@@ -53,7 +52,6 @@ const ServiceCell = ({ value }) => (
     </span>
   </Tooltip>
 );
-
 
 const ActionButtons = ({ onPreview, onDownload, onEdit, onDelete }) => (
   <div style={{ display: "flex", alignItems: "center", gap: "3px", flexWrap: "nowrap" }}>
@@ -79,31 +77,18 @@ const ActionButtons = ({ onPreview, onDownload, onEdit, onDelete }) => (
   </div>
 );
 
-
-const hBtn = (bg) => ({
-  display: "inline-flex", alignItems: "center", gap: "6px",
-  backgroundColor: bg, color: "#fff", border: "none", borderRadius: "6px",
-  padding: "6px 12px", fontSize: "13px", fontWeight: 500,
-  cursor: "pointer", whiteSpace: "nowrap",
-  boxShadow: "0 1px 2px rgba(0,0,0,0.1)",
-});
-
-
 const TaxInvoice = () => {
   const [view, setView] = useState("list");
   const headerRef = useRef(null);
   const [scrollH, setScrollH] = useState("500px");
 
-  
   useEffect(() => {
     const calc = () => {
       if (headerRef.current) {
         const hh = headerRef.current.getBoundingClientRect().height;
-        
         setScrollH(`calc(100vh - ${hh + 78}px)`);
       }
     };
-  
     const t = setTimeout(calc, 50);
     window.addEventListener("resize", calc);
     return () => { clearTimeout(t); window.removeEventListener("resize", calc); };
@@ -120,7 +105,6 @@ const TaxInvoice = () => {
     setView("list");
   };
 
-  
   const tStyles = {
     table: { style: { width: "100%" } },
     headRow: {
@@ -129,7 +113,7 @@ const TaxInvoice = () => {
         fontWeight: "600", fontSize: "12px", minHeight: "40px",
       },
     },
-   headCells: { style: { color: "#fff", paddingLeft: "8px", paddingRight: "4px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", fontSize:"12px" } },
+    headCells: { style: { color: "#fff", paddingLeft: "8px", paddingRight: "4px", textTransform: "uppercase", fontWeight: 700, letterSpacing: "0.5px", fontSize:"12px" } },
     rows: {
       style: { borderBottom: "1px solid #e5e7eb", minHeight: "44px" },
       stripedStyle: { backgroundColor: "#f9fafb" },
@@ -143,7 +127,6 @@ const TaxInvoice = () => {
     },
   };
 
-  
   const cols = [
     {
       name: "Invoice No", selector: r => r.id, sortable: true, width: "100px",
@@ -182,58 +165,40 @@ const TaxInvoice = () => {
     },
   ];
 
-  
+  // ── LIST VIEW ──────────────────────────────────────────────────────────────
   if (view === "list") {
     return (
       <div style={{
         display: "flex", flexDirection: "column",
-        height: "100vh", overflow: "hidden",   
+        height: "100vh", overflow: "hidden",
         padding: "16px 20px 12px", boxSizing: "border-box",
       }}>
-
-      
         <div ref={headerRef} style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           flexWrap: "wrap", gap: "10px", marginBottom: "12px", flexShrink: 0,
         }}>
-        
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            
-
-              <BackButton/>
-
-
-
-
+            <BackButton/>
             <h2 style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: 0, whiteSpace: "nowrap" }}>
               Generate Tax Invoice
             </h2>
           </div>
-
-          
-          
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-  
-        <HButton onClick={() => message.info("Tax Invoice No clicked")}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+            <HButton onClick={() => message.info("Tax Invoice No clicked")}>
               <FileTextOutlined /> Tax Invoice No
-                            </HButton>
-
+            </HButton>
             <HButton onClick={() => setView("form")}>
-               <PlusOutlined /> Generate Invoice
-                       </HButton>
-
-                <HButton onClick={() => message.info("Exporting…")}>
-                  <ExportOutlined /> Export Excel
-                        </HButton>
-
-           <HButton onClick={() => message.info("Filter clicked")}>
+              <PlusOutlined /> Generate Invoice
+            </HButton>
+            <HButton onClick={() => message.info("Exporting…")}>
+              <ExportOutlined /> Export Excel
+            </HButton>
+            <HButton onClick={() => message.info("Filter clicked")}>
               <FilterOutlined /> Filter
-                         </HButton>
-
-                  </div>
+            </HButton>
+          </div>
         </div>
 
-        
         <div style={{
           flex: 1, minHeight: 0,
           borderRadius: "8px", overflow: "hidden",
@@ -251,29 +216,30 @@ const TaxInvoice = () => {
             fixedHeaderScrollHeight={scrollH}
             customStyles={tStyles}
             noDataComponent={
-              <div style={{ padding: "40px", color: "#9ca3af", fontSize: "13px " }}>No invoices found.</div>
+              <div style={{ padding: "40px", color: "#9ca3af", fontSize: "13px" }}>No invoices found.</div>
             }
           />
         </div>
-
       </div>
     );
   }
 
-  
+  // ── FORM VIEW ──────────────────────────────────────────────────────────────
   return (
     <div style={{ padding: "16px 20px", height: "100vh", overflowY: "auto", boxSizing: "border-box" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
-       <PrevBtn onClick={() => setView("list")}/>
-        
+        <PrevBtn onClick={() => setView("list")}/>
         <h2 style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: 0 }}>
           Create Tax Invoice
         </h2>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+
+        {/* Customer */}
         <InputField control={control} errors={errors} name="customer" label="Customer" />
 
+        {/* Products */}
         <Card className="!p-4">
           <InputField control={control} errors={errors} name="products"
             type="select" mode="multiple" label="Select Products"
@@ -286,29 +252,34 @@ const TaxInvoice = () => {
           <p className="text-xs text-gray-500 mt-1">Select products to set quantity, rate and stock used.</p>
         </Card>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Row: Date | Payment Mode | Sales Person */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
           <InputField control={control} errors={errors} name="date" type="date" label="Date" />
           <InputField control={control} errors={errors} name="paymentMode" type="option" label="Mode/Terms of Payment"
             options={[{ label: "Cash", value: "cash" }, { label: "Bank", value: "bank" }, { label: "UPI", value: "upi" }]} />
           <InputField control={control} errors={errors} name="salesPerson" label="Sales Person" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Row: Dispatched Through | Destination | Reminder Date */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
           <InputField control={control} errors={errors} name="dispatch" label="Dispatched Through" />
           <InputField control={control} errors={errors} name="destination" label="Destination" />
           <InputField control={control} errors={errors} name="reminderDate" type="date" label="Reminder Date" />
         </div>
 
+        {/* Terms of Delivery */}
         <InputField control={control} errors={errors} name="terms" type="description" label="Terms of Delivery" rows={3} />
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Row: Tax Type | PO Number | PO Date */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
           <InputField control={control} errors={errors} name="taxType" type="option" label="Tax Type"
             options={[{ label: "GST", value: "gst" }]} />
           <InputField control={control} errors={errors} name="poNumber" label="PO Number" />
           <InputField control={control} errors={errors} name="poDate" type="date" label="PO Date" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {/* Row: Freight | Previous Balance | Received Amount */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
           <InputField control={control} errors={errors} name="freight" type="numeric" label="Freight & Cartage Amount" />
           <InputField control={control} errors={errors} name="previousBalance" type="numeric" label="Previous Balance" />
           <InputField control={control} errors={errors} name="received" type="numeric" label="Received Amount" />
@@ -320,6 +291,7 @@ const TaxInvoice = () => {
             Create Tax Invoice
           </Button>
         </div>
+
       </form>
     </div>
   );

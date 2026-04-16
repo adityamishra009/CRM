@@ -5,6 +5,8 @@ import FilterCustomer from "../Components/FilterCustomer";
 import BackButton from "../Components/BackButton"
 import EditCustomerModal from "../Components/EditCustomerModal";
 import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
+
 
 const AllCustomers = () => {
   const [data, setData] = useState([
@@ -29,7 +31,7 @@ const AllCustomers = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  
+  // Add
   const handleAddCustomer = (values) => {
     const newCustomer = {
       id: data.length + 1,
@@ -38,7 +40,7 @@ const AllCustomers = () => {
     setData([...data, newCustomer]);
   };
 
-  
+   // ✅ Update
   const handleUpdate = (updatedData) => {
     if (!selectedRow) return;
 
@@ -52,25 +54,45 @@ const AllCustomers = () => {
     setSelectedRow(null);
   };
 
+const handleDelete = (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      setData(data.filter((item) => item.id !== id));
 
-const handleDeleteRow = (id) => {
-  setData((prev) => prev.filter((item) => item.id !== id));
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your record has been deleted.",
+        icon: "success",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    }
+  });
 };
 
 const customStyles = {
   headRow: {
     style: {
       background: "black",
-      borderRadius: "10px",
+      borderTopRightRadius: "10px",
+      borderTopLeftRadius: "10px",
       overflow: "hidden",
     },
   },
   headCells: {
     style: {
       color: "white",
-      fontWeight: "700",
-      fontSize: "12px",
-       textTransform: "uppercase",
+      fontWeight: "600",
+      textTransform: "uppercase",
+      fontSize: "14px",
     },
   },
 };
@@ -102,13 +124,7 @@ const customStyles = {
      cell: (row) => (
       <div className="flex gap-1">
       <button
-        onClick={(e) => {
-          e.stopPropagation(); 
-          if (window.confirm("Delete this customer?")) {
-            setSelectedRow(row);
-            handleDeleteRow(row.id);
-          }
-        }}
+        onClick={()=>handleDelete(row.id)}
         className="flex gap-1 cursor-pointer hover:scale-105 bg-red-500 text-white px-3 py-1 rounded text-sm"
       >
         <MdDelete size={20}/>
@@ -120,21 +136,22 @@ const customStyles = {
   ];
 
   return (
-    <div className="p-3">
-      
-      <div className="flex justify-between items-center mb-3">
-        <div className="flex gap-2 items-center">
+    <div className="mt-5 bg-white p-3 sm:p-4 rounded-lg shadow-sm">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-3">
+        <div className="flex gap-2">
          <BackButton/>
           <h1 className="text-xl font-semibold">Customers</h1>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
           <AddCustomer onAddCustomer={handleAddCustomer} />
           <FilterCustomer />
         </div>
       </div>
 
-      
+      {/* Table */}
+      <div className="overflow-x-auto">
       <DataTable
         columns={columns}
         data={data}
@@ -149,8 +166,9 @@ const customStyles = {
         }}
         customStyles={customStyles}
       />
+      </div>
 
-      
+      {/* Edit Modal */}
       <EditCustomerModal
         open={editOpen}
         onClose={() => {
@@ -159,7 +177,7 @@ const customStyles = {
         }}
         selectedRow={selectedRow}
         onUpdate={handleUpdate}
-        onDelete={handleDeleteRow}
+        onDelete={handleDelete}
       />
     </div>
   );

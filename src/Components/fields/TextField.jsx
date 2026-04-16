@@ -27,20 +27,19 @@ const TextField = ({
           <label
             htmlFor={name}
             className={
-              "font-medium ml-0.5 text-white" +
+              "font-medium ml-0.5 text-black" +
               (labelClass !== "" ? ` ${labelClass}` : "")
             }
           >
-            {" "}
             {label}
-            {required && <span className="text-red-500">*</span>}
+            {required && <span className="text-red-500 ml-1">*</span>}
           </label>
         )}
-        <div className="flex items-center border w-full border-solid !border-white overflow-hidden bg-transparent rounded-sm">
+
+        <div className="flex items-center border w-full border-gray-600 overflow-hidden bg-gray-900 rounded-sm focus-within:border-blue-500 transition">
           <Controller
             name={name}
             control={control}
-            className={"bg-transparent w-full"}
             defaultValue={defaultValue}
             rules={{
               required: required
@@ -53,18 +52,20 @@ const TextField = ({
                 type={type}
                 placeholder={placeholder}
                 {...field}
-                // value={value}
                 disabled={disabled}
                 className={
-                  "w-full !text-white px-2.5 py-2 text-sm font-poppins placeholder:font-poppins placeholder:not-italic placeholder:text-sm placeholder:leading-normal placeholder:font-medium !text-white not-italic leading-normal bg-transparent font-medium outline-none border-none disabled:bg-[#eceff1] disabled:cursor-not-allowed" +
+                  "w-full text-black px-2.5 py-2 text-sm font-poppins placeholder:text-gray-400 bg-white outline-none border-none disabled:bg-white disabled:text-black disabled:cursor-not-allowed" +
                   (className !== "" ? ` ${className}` : "")
                 }
               />
             )}
           />
         </div>
+
         {errors[name] && (
-          <p className="text-red-500">{errors[name]?.message}</p>
+          <p className="text-red-500 text-xs">
+            {errors[name]?.message}
+          </p>
         )}
       </div>
     </>

@@ -52,7 +52,7 @@ const handleLogout = () => {
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 h-13 border-b border-[var(--color-border)] bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
+        <div className="flex items-center justify-between px-4 h-12 border-b border-[var(--color-border)] bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
   
   <div className="flex items-center h-full">
     <img
@@ -100,8 +100,14 @@ const handleLogout = () => {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-[var(--color-border)] text-xs text-[var(--color-text)] bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
-          <button className="cursor-pointer text-black flex gap-1" onClick={handleLogout}>Logout <LogOut size={18} /></button>
+        <div className="p-2 m-2 rounded border-t border-(--color-border) bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] flex items-center justify-center">
+          <button
+            className="flex items-center justify-center gap-2 text-lg font-semibold text-white cursor-pointer w-full"
+            onClick={handleLogout}
+          >
+            <LogOut size={23} />
+            <span>Logout</span>
+          </button>
         </div>
       </aside>
     </>
