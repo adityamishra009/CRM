@@ -1,80 +1,106 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Button } from "antd";
-import AddBtn from "../Components/AddBtn"
+import { Modal, Button } from "antd";
+import { useForm } from "react-hook-form";
+import AddBtn from "./AddBtn";
+import InputField from "./fields/InputField";
 
-const AddCustomer = ({onAddEmployee}) => {
+const AddCustomer = ({ onAddCustomer }) => {
   const [open, setOpen] = useState(false);
-  const [form] = Form.useForm();
 
-  const showModal = () => {
-    setOpen(true);
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleClose = () => {
+  const showModal = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const onSubmit = (data) => {
+    onAddCustomer(data);
     setOpen(false);
+    reset();
   };
-
-   const handleFinish = (values) => {
-  onAddEmployee(values);   // 🔥 parent ko data bhej diya
-  setOpen(false);
-  form.resetFields();
-};
 
   return (
     <div>
-
       {/* Button */}
       <AddBtn onAdd={showModal} />
 
       {/* Modal */}
-     <Modal
+      <Modal
         title="Add Customer"
         open={open}
         onCancel={handleClose}
         footer={null}
         centered
       >
-        <Form form={form} layout="vertical" onFinish={handleFinish}>
-          
-          <Form.Item
-            label="Customer Name"
-            name="customerName"
-            rules={[{ required: true, message: "Enter customer name" }]}
-          >
-            <Input placeholder="Enter Customer Name" />
-          </Form.Item>
+        <form onSubmit={handleSubmit(onSubmit)}>
 
-          <Form.Item
-            label="Mobile Number"
-            name="mobileNumber"
-            rules={[{ required: true, message: "Enter mobile number" }]}
-          >
-            <Input placeholder="Enter Mobile Number" />
-          </Form.Item>
+          <div className="mb-3 mt-5">
+            <InputField
+              control={control}
+              errors={errors}
+              name="lpiId"
+              label="LPI ID"
+              placeholder="Enter LPI ID"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="customerName"
+              label="Customer Name"
+              placeholder="Enter Customer Name"
+              required
+            />
+          </div>
 
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Enter email" }]}
-          >
-            <Input placeholder="Enter Email" />
-          </Form.Item>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="mobileNumber"
+              label="Mobile Number"
+              placeholder="Enter Mobile Number"
+              required
+            />
+          </div>
 
-          <Form.Item
-            label="Lead Date"
-            name="leadDate"
-            rules={[{ required: true, message: "Enter lead date" }]}
-          >
-            <Input placeholder="Enter Lead Date" />
-          </Form.Item>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="email"
+              type="email"
+              label="Email"
+              placeholder="Enter Email"
+              required
+            />
+          </div>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Add Customer
-            </Button>
-          </Form.Item>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="lastleadDate"
+              type="date"
+              label="Last Lead Date"
+              required
+            />
+          </div>
 
-        </Form>
+          <Button 
+          className="mt-3 bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!" 
+          type="primary" 
+          htmlType="submit" 
+          block>
+            Add Customer
+          </Button>
+        </form>
       </Modal>
     </div>
   );

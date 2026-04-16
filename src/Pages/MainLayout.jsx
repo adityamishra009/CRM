@@ -1,25 +1,25 @@
 import Sidebar from "../Components/Sidebar";
 import Navbar from "../Components/Navbar";
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
 
 export default function MainLayout() {
-  return (
-    <div className="flex">
+  const [open, setOpen] = useState(false);
 
+  return (
+    <div className="flex overflow-x-hidden">
       {/* Sidebar */}
-      <Sidebar />
+      <Sidebar open={open} setOpen={setOpen} />
 
       {/* Right side */}
-      <div className="md:ml-60 w-full">
-
+      <div className="md:ml-60 flex-1 min-w-0">
         {/* Navbar */}
-        <Navbar />
+        <Navbar setOpen={setOpen} />
 
         {/* Content */}
-        <div className="pt-16  min-h-screen overflow-y-auto p-4">
+        <div className="pt-16 min-h-screen overflow-y-auto overflow-x-hidden p-4">
           <Outlet />
         </div>
-
       </div>
     </div>
   );

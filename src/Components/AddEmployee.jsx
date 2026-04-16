@@ -1,80 +1,99 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Button } from "antd";
-import AddBtn from "./AddBtn"
+import { Modal, Button } from "antd";
+import { useForm } from "react-hook-form";
+import AddBtn from "./AddBtn";
+import InputField from "./fields/InputField";
+import { Controller } from "react-hook-form";
 
-const AddEmployee = ({onAddEmployee}) => {
+const AddEmployee = ({ onAddEmployee }) => {
   const [open, setOpen] = useState(false);
-  const [form] = Form.useForm();
 
-  const showModal = () => {
-    setOpen(true);
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleClose = () => {
+  const showModal = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const onSubmit = (data) => {
+    onAddEmployee(data);
     setOpen(false);
+    reset();
   };
-
- const handleFinish = (values) => {
-  onAddEmployee(values);   // 🔥 parent ko data bhej diya
-  setOpen(false);
-  form.resetFields();
-};
 
   return (
     <div>
-
       {/* Button */}
       <AddBtn onAdd={showModal} />
 
       {/* Modal */}
-     <Modal
+      <Modal
         title="Add Employee"
         open={open}
         onCancel={handleClose}
         footer={null}
         centered
       >
-        <Form form={form} layout="vertical" onFinish={handleFinish}>
-          
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: "Enter name" }]}
-          >
-            <Input placeholder="Enter Name" />
-          </Form.Item>
+        <form onSubmit={handleSubmit(onSubmit)}>
 
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Enter email" }]}
-          >
-            <Input placeholder="Enter Email" />
-          </Form.Item>
+          <div className="mb-3 mt-5">
+            <InputField
+              control={control}
+              errors={errors}
+              name="name"
+              label="Name"
+              placeholder="Enter Name"
+              required
+            />
+          </div>
 
-          <Form.Item
-            label="Mobile"
-            name="mobile"
-            rules={[{ required: true, message: "Enter mobile" }]}
-          >
-            <Input placeholder="Enter Mobile" />
-          </Form.Item>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="email"
+              type="email"
+              label="Email"
+              placeholder="Enter Email"
+              required
+            />
+          </div>
 
-          <Form.Item
-            label="Profile"
-            name="profile"
-            rules={[{ required: true, message: "Enter profile" }]}
-          >
-            <Input placeholder="Enter Profile" />
-          </Form.Item>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="mobile"
+              label="Mobile"
+              placeholder="Enter Mobile"
+              required
+            />
+          </div>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              Add Employee
-            </Button>
-          </Form.Item>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="profile"
+              type="option"
+              label="Profile"
+              placeholder="Select Status"
+              options={[
+                { label: "Active", value: "Active" },
+                { label: "Inactive", value: "Inactive" },
+              ]}
+              required
+            />
+          </div>
 
-        </Form>
+          <Button className="mt-3 bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!" 
+          type="primary" htmlType="submit" block>
+            Add Employee
+          </Button>
+        </form>
       </Modal>
     </div>
   );

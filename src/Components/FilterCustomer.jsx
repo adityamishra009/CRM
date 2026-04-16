@@ -1,80 +1,115 @@
 import React, { useState } from "react";
-import { Drawer, Form, Input, Button } from "antd";
-import FilterButton from "../Components/FilterBtn"
+import { Drawer, Button, message } from "antd";
+import { useForm } from "react-hook-form";
+import FilterButton from "./Filterbtn";
+import InputField from "./fields/InputField";
 
 const FilterCustomer = () => {
   const [open, setOpen] = useState(false);
-  const [form] = Form.useForm();
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const handleFinish = (values) => {
-    console.log("Filter Data:", values);
+  const onSubmit = (data) => {
+    console.log("Filter Data:", data);
     setOpen(false);
   };
 
   return (
     <div>
-      
       <FilterButton onClick={handleOpen} />
 
       <Drawer
         title="Filter Customer"
-        placement="right"   
+        placement="right"
         open={open}
         onClose={handleClose}
-        size={350}      
+        size={350}
       >
-        <Form form={form} layout="vertical" onFinish={handleFinish}>
-                  
-          <Form.Item
-            label="Customer Name"
-            name="customer name"
-            rules={[{ required: true, message: "Enter Customer Name" }]}
-          >
-            <Input placeholder="Enter Customer Name" />
-          </Form.Item>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="lpiId"
+              label="LPI ID"
+              placeholder="Enter LPI ID"
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="customerName"
+              label="Customer Name"
+              placeholder="Enter Customer Name"
+              required
+            />
+          </div>
 
-          <Form.Item
-            label="Mobile Number"
-            name="mobile number"
-            rules={[{ required: true, message: "Enter mobile number" }]}
-          >
-            <Input placeholder="Enter Mobile Number" />
-          </Form.Item>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="mobileNumber"
+              label="Mobile Number"
+              placeholder="Enter Mobile Number"
+              required
+            />
+          </div>
 
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Enter email" }]}
-          >
-            <Input placeholder="Enter Email" />
-          </Form.Item>
-        
-          <Form.Item
-            label="Lead Date"
-            name="lead date"
-            rules={[{ required: true, message: "Enter Lead Date" }]}
-          >
-            <Input placeholder="Enter Lead Date" />
-          </Form.Item>
-        
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="email"
+              type="email"
+              label="Email"
+              placeholder="Enter Email"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="lastleadDate"
+              type="date"
+              label="Last Lead Date"
+              required
+            />
+          </div>
+
           <div className="flex gap-2">
-            <Button type="primary" htmlType="submit" block>
+            <Button 
+            type="primary" 
+            htmlType="submit" 
+            block 
+            onClick={() => message.info("Applied...")}
+            className="bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!">
               Apply
             </Button>
-            <Button onClick={() => form.resetFields()} block>
+
+            <Button 
+            onClick={() => reset()} 
+            block
+            className="hover:scale-105!"
+            >
               Reset
             </Button>
           </div>
-        
-        </Form>
+
+        </form>
       </Drawer>
     </div>
   );

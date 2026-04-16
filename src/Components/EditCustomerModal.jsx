@@ -80,7 +80,12 @@ const EditCustomerModal = ({
         </div>
 
         <div className="mt-3">
-          <Button type="primary" htmlType="submit" block>
+          <Button 
+          type="primary" 
+          htmlType="submit" 
+          block
+          className="mt-3 bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!"
+          >
             Update
           </Button>
         </div>

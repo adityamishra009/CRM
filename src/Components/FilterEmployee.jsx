@@ -1,80 +1,112 @@
 import React, { useState } from "react";
-import { Drawer, Form, Input, Button } from "antd";
-import FilterButton from "../Components/FilterBtn"
+import { Drawer, Button } from "antd";
+import { useForm } from "react-hook-form";
+import FilterButton from "./Filterbtn";
+import InputField from "./fields/InputField";
+
 
 const FilterEmployee = () => {
   const [open, setOpen] = useState(false);
-  const [form] = Form.useForm();
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
-  const handleFinish = (values) => {
-    console.log("Filter Data:", values);
+  const onSubmit = (data) => {
+    console.log("Filter Data:", data);
     setOpen(false);
   };
 
   return (
     <div>
-      
       <FilterButton onClick={handleOpen} />
 
       <Drawer
         title="Filter Employee"
-        placement="right"   
+        placement="right"
         open={open}
         onClose={handleClose}
-        size={350}      
+        size={350}
       >
-        <Form form={form} layout="vertical" onFinish={handleFinish}>
-                  
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: "Enter name" }]}
-          >
-            <Input placeholder="Enter Name" />
-          </Form.Item>
-        
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Enter email" }]}
-          >
-            <Input placeholder="Enter Email" />
-          </Form.Item>
+        <form onSubmit={handleSubmit(onSubmit)}>
 
-          <Form.Item
-            label="Mobile"
-            name="mobile"
-            rules={[{ required: true, message: "Enter mobile" }]}
-          >
-            <Input placeholder="Enter Mobile" />
-          </Form.Item>
-        
-          <Form.Item
-            label="Profile"
-            name="profile"
-            rules={[{ required: true, message: "Enter profile" }]}
-          >
-            <Input placeholder="Enter Profile" />
-          </Form.Item>
-        
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="name"
+              label="Name"
+              placeholder="Enter Name"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="email"
+              type="email"
+              label="Email"
+              placeholder="Enter Email"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="mobile"
+              label="Mobile"
+              placeholder="Enter Mobile"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="profile"
+              type="option"
+              label="Profile"
+              placeholder="Select Status"
+              options={[
+                { label: "Active", value: "Active" },
+                { label: "Inactive", value: "Inactive" },
+              ]}
+              required
+            />
+          </div>
+          
+
           <div className="flex gap-2">
-            <Button type="primary" htmlType="submit" block>
+            <Button 
+            type="primary" 
+            htmlType="submit" 
+            block 
+            onClick={() => message.info("Applied...")}
+            className="bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!">
               Apply
             </Button>
-            <Button onClick={() => form.resetFields()} block>
+
+            <Button 
+            onClick={() => reset()} 
+            block
+            className="hover:scale-105!"
+            >
               Reset
             </Button>
           </div>
-        
-        </Form>
+
+        </form>
       </Drawer>
     </div>
   );

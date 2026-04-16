@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Menu, X,LogOut } from "lucide-react";
+import { X,LogOut } from "lucide-react";
 import clsx from "clsx";
 import { NavLink } from "react-router-dom";
 import { sidebarMenu } from "../Constant/SidebarMenu";
 import { useNavigate } from "react-router-dom"; // ✅ add
 import logo1 from "../assets/logo1.png"
 
-export default function Sidebar() {
-  const [open, setOpen] = useState(false);
+export default function Sidebar({open,setOpen}) {
 
   const navigate = useNavigate();
 
@@ -18,33 +17,18 @@ const handleLogout = () => {
 
   return (
     <>
-      {/* Mobile button */}
-      <button
-  onClick={() => setOpen(true)}
-  className="md:hidden fixed top-2 left-3 z-50 
-  p-1.5 rounded-lg 
-  bg-white/10 backdrop-blur-md 
-  border border-white/20 
-  shadow-lg 
-  hover:scale-105 active:scale-95 
-  transition"
->
-  <Menu size={20} className="text-black" />
-</button>
-
-      {/* Overlay */}
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-black/30 z-30 md:hidden"
-        />
-      )}
-
+        {/* ✅ Overlay (mobile only) */}
+  {open && (
+    <div
+      className="fixed inset-0 bg-black/40 z-40 md:hidden"
+      onClick={() => setOpen(false)}
+    />
+  )}
       {/* Sidebar */}
       <aside
         className={clsx(
           "fixed top-0 left-0 z-50 h-screen w-60",
-          "bg-[var(--color-bg)]",
+          "bg-(--color-bg)",
           "flex flex-col",
           "transition-transform duration-300",
           open ? "translate-x-0" : "-translate-x-full",
@@ -52,17 +36,13 @@ const handleLogout = () => {
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 h-12 border-b border-[var(--color-border)] bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
+        <div className="flex items-center justify-between px-4 h-13 border-b border-(--color-border) bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]">
   
-  <div className="flex items-center h-full">
-    <img
-      src={logo1}
-      alt="logo"
-      className="h-50  w-auto object-contain"
-    />
-  </div>
+        <div className="flex items-center text-white font-semibold text-2xl">
+           <img src={logo1}></img>
+        </div>
           <button
-            className="md:hidden text-[var(--color-text)]"
+            className="md:hidden text-(--color-text)"
             onClick={() => setOpen(false)}
           >
             <X size={18} />
@@ -86,7 +66,7 @@ const handleLogout = () => {
                         "w-full flex items-center gap-3 px-3 py-2 rounded text-sm transition",
                         isActive
                           ? "bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] text-black"
-                          : "text-[var(--color-text)] hover:bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]"
+                          : "text-(--color-text) hover:bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]"
                       )
                     }
                   >
@@ -100,14 +80,14 @@ const handleLogout = () => {
         </nav>
 
         {/* Footer */}
-        <div className="p-2 m-2 rounded border-t border-(--color-border) bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] flex items-center justify-center">
-          <button
-            className="flex items-center justify-center gap-2 text-lg font-semibold text-white cursor-pointer w-full"
-            onClick={handleLogout}
-          >
-            <LogOut size={23} />
-            <span>Logout</span>
-          </button>
+        <div className="p-2 m-2 rounded border-t border-(--color-border) bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] flex items-center justify-center"> 
+          <button 
+            className="flex items-center justify-center gap-2 text-lg font-semibold text-white cursor-pointer w-full" 
+            onClick={handleLogout} 
+          > 
+            <LogOut size={25} /> 
+            <span>Logout</span> 
+          </button> 
         </div>
       </aside>
     </>

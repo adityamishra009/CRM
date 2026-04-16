@@ -17,7 +17,7 @@ export default function Login() {
     const { email, password } = data;
 
     if (email === "admin@gmail.com" && password === "1234") {
-      localStorage.setItem("isLoggedIn", "true");
+      sessionStorage.setItem("isLoggedIn", "true");
 
       toast.success("You have logged in successfully ✅");
 

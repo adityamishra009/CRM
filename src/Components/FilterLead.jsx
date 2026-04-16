@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Drawer } from "antd";
+import { Drawer, Button } from "antd";
 import { useForm } from "react-hook-form";
-import FilterButton from "../Components/FilterBtn";
+import FilterButton from "./Filterbtn";
 import InputField from "./fields/InputField";
 
 const FilterLead = () => {
@@ -39,20 +39,9 @@ const FilterLead = () => {
             <InputField
               control={control}
               errors={errors}
-              name="teamMembers"
-              label="Team Members"
-              placeholder="Enter Team Members"
-              required
-            />
-          </div>
-
-          <div className="mb-3">
-            <InputField
-              control={control}
-              errors={errors}
               name="leadId"
-              label="Lead Id"
-              placeholder="Enter Lead Id"
+              label="Lead ID"
+              placeholder="Enter Lead ID"
               required
             />
           </div>
@@ -61,9 +50,53 @@ const FilterLead = () => {
             <InputField
               control={control}
               errors={errors}
-              name="clientMobileNumber"
-              label="Client Mobile Number"
-              placeholder="Enter Client Mobile Number"
+              name="date"
+              label="Date"
+              placeholder="Enter Date"
+              required
+            />
+          </div>
+
+          <div className="mb-3 mt-5">
+            <InputField
+              control={control}
+              errors={errors}
+              name="name"
+              label="Name"
+              placeholder="Enter Name"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="mobileNumber"
+              label="Mobile"
+              placeholder="Enter Mobile"
+              required
+            />
+          </div>
+
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="emailId"
+              label="Email"
+              placeholder="Enter Email"
+              required
+            />
+          </div>  
+
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+                name="serviceCategary"
+              label="Service"
+              placeholder="Enter Service"
               required
             />
           </div>
@@ -83,45 +116,41 @@ const FilterLead = () => {
             <InputField
               control={control}
               errors={errors}
-              name="salesStatus2"
-              label="Sales Status 2"
-              placeholder="Enter Sales Status 2"
+              name="operationStatus"
+              label="Operation Status"
+              placeholder="Enter Operation Status"
               required
             />
           </div>
 
-          {/* ✅ Updated Buttons */}
-          <div className="flex gap-[6px] mt-4">
-            
-            <button
-              type="submit"
-              className="flex-1 flex items-center justify-center gap-[6px]
-                         px-[14px] py-[8px]
-                         rounded-md
-                         bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]
-                         text-white
-                         cursor-pointer
-                         transition-all duration-200
-                         hover:brightness-90"
-            >
-              Apply
-            </button>
+          <div className="mb-3">
+            <InputField
+              control={control}
+              errors={errors}
+              name="totalPayments"
+              label="Payments"
+              placeholder="Enter Payments"
+              required
+            />
+          </div>
 
-            <button
-              type="button"
-              onClick={() => reset()}
-              className="flex-1 flex items-center justify-center gap-[6px]
-                         px-[14px] py-[8px]
-                         rounded-md
-                         bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]
-                         text-white
-                         cursor-pointer
-                         transition-all duration-200
-                         hover:brightness-90"
+          <div className="flex gap-2">
+            <Button 
+            type="primary" 
+            htmlType="submit" 
+            block 
+            onClick={() => message.info("Applied...")}
+            className="bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!">
+              Apply
+            </Button>
+
+            <Button 
+            onClick={() => reset()} 
+            block
+            className="hover:scale-105!"
             >
               Reset
-            </button>
-
+            </Button>
           </div>
 
         </form>
