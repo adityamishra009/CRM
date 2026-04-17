@@ -19,13 +19,13 @@ export default function Login() {
     if (email === "admin@gmail.com" && password === "1234") {
       sessionStorage.setItem("isLoggedIn", "true");
 
-      toast.success("You have logged in successfully ✅");
+      toast.success("You have logged in successfully");
 
       setTimeout(() => {
         navigate("/dashboard");
       }, 1500);
     } else {
-      toast.error("Invalid credentials ❌");
+      toast.error("Invalid credentials ");
     }
   };
 
@@ -53,7 +53,7 @@ export default function Login() {
             errors={errors}
             label="Email"
             placeholder="Enter your email"
-            
+            className="cursor-pointer" 
           />
 
           <InputField
@@ -63,6 +63,7 @@ export default function Login() {
             errors={errors}
             label="Password"
             placeholder="Enter your password"
+            className="cursor-pointer"
           />
 
           <button

@@ -136,7 +136,7 @@ const customStyles = {
   ];
 
   return (
-    <div className="mt-5 bg-white p-3 sm:p-4 rounded-lg shadow-sm">
+    <div className="mt-1 bg-white p-3 sm:p-4 rounded-lg shadow-sm">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-3">
         <div className="flex gap-2">

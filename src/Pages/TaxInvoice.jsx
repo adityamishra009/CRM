@@ -6,10 +6,8 @@ import {
   DownloadOutlined,
   EditOutlined,
   DeleteOutlined,
-  FilterOutlined,
   PlusOutlined,
   ExportOutlined,
-  ArrowLeftOutlined,
   FileTextOutlined,
 } from "@ant-design/icons";
 
@@ -19,6 +17,7 @@ import DataTableImport from "react-data-table-component";
 const DataTable = DataTableImport.default || DataTableImport;
 import PrevBtn from "../Components/PrevBtn";
 import HButton from "../Components/HButton";
+import FilterTaxInvoice from "../Components/FilterTaxInvoice";
 
 
 const existingInvoices = [
@@ -193,9 +192,7 @@ const TaxInvoice = () => {
             <HButton onClick={() => message.info("Exporting…")}>
               <ExportOutlined /> Export Excel
             </HButton>
-            <HButton onClick={() => message.info("Filter clicked")}>
-              <FilterOutlined /> Filter
-            </HButton>
+           <FilterTaxInvoice/>
           </div>
         </div>
 
@@ -287,7 +284,7 @@ const TaxInvoice = () => {
 
         <div className="pt-4 pb-8">
           <Button htmlType="submit" type="primary"
-            className="!bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] !border-none !text-black px-6 py-2 rounded-md">
+            className="!bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] !border-none !text-white px-6 py-2 rounded-md">
             Create Tax Invoice
           </Button>
         </div>

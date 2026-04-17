@@ -35,18 +35,21 @@ const PasswordField = ({
               placeholder={placeholder}
               disabled={disabled}
               {...field}
-              className={"w-full px-2.5 py-2 text-sm text-[#000000] font-poppins placeholder:font-poppins placeholder:not-italic placeholder:text-sm placeholder:leading-normal placeholder:font-medium placeholder:text-[#6E6E6E] not-italic leading-normal bg-transparent font-medium outline-none disabled:bg-[#eceff1] disabled:cursor-not-allowed border-none" + (className !== "" ? ` ${className}`: "")}
+              className={"w-full px-2.5 py-2 text-sm text-[#000000] font-poppins placeholder:font-poppins placeholder:not-italic placeholder:text-sm placeholder:leading-normal placeholder:font-medium placeholder:text-[#6E6E6E] not-italic leading-normal bg-transparent font-medium outline-none disabled:bg-[#eceff1] disabled:cursor-not-allowed border-none cursor-pointer" + (className !== "" ? ` ${className}`: "")}
               autoComplete="off"
             />
           )}
         />
-        <button
-          type="button"
-          onClick={disabled ? ()=> {}: togglePasswordVisibility}
-          className={`absolute right-2 text-gray-500 bg-transparent ${disabled ? "cursor-not-allowed": ""}`}
-        >
-          {showPassword ? <FiEyeOff size={"18px"} /> : <FiEye size={"18px"} />}
-        </button>
+       <button
+  type="button"
+  onClick={disabled ? () => {} : togglePasswordVisibility}
+  className={`absolute right-2 text-gray-500 bg-transparent 
+    ${disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
+>
+  {showPassword ? <FiEyeOff size={"18px"} /> : <FiEye size={"18px"} />}
+</button>
+
+
       </div>
       {errors[name] && <p className="text-red-500">{errors[name]?.message}</p>}
     </div>

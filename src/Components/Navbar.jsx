@@ -45,7 +45,7 @@ const Navbar = ({setOpen}) => {
       <div className="flex justify-between items-center py-1 px-2">
 
         {/* Left */}
-        <div ref={searchRef} className="p-2 gap-3 flex items-center">
+        <div ref={searchRef} className="p-2 gap-4 flex items-center">
 
           <div className="cursor-pointer md:hidden" onClick={() => setOpen(true)}>
             <Menu size={24}/>

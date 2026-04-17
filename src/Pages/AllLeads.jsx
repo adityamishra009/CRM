@@ -104,7 +104,7 @@ const leadStyles = {
 ];
 
   return (
-    <div className="mt-3">
+    <div className="mt-1">
       {/* Header */}
       <div className="flex justify-between items-center mb-3">
         <div className="flex gap-2 items-center">
