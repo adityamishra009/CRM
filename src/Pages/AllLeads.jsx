@@ -104,22 +104,21 @@ const leadStyles = {
 ];
 
   return (
-    <div className="mt-1">
+    <div className="mt-1  p-3 sm:p-4 rounded-lg shadow-sm">
       {/* Header */}
-      <div className="flex justify-between items-center mb-3">
-        <div className="flex gap-2 items-center">
-          <BackButton/>
-          <h1 className="text-xl font-semibold">Leads</h1>
-        </div>
+     <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
+  <div className="flex gap-2 items-center">
+    <BackButton />
+    <h1 className="text-xl font-semibold">Leads</h1>
+  </div>
 
-        <div className="flex gap-2">
-          <FilterLead />
-          <BulkUploadBtn />
-          <AddLead onAddLead={handleAddLead} />
-          <ExportBtn />
+  <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-end w-full sm:w-auto">
+    <FilterLead />
+    <BulkUploadBtn />
+    <AddLead onAddLead={handleAddLead} />
+    <ExportBtn />
         </div>
-      </div>
-
+            </div>
       {/* Table */}
       <DataTable
         columns={columns}
@@ -133,8 +132,7 @@ const leadStyles = {
           setSelectedRow(row);
           setEditOpen(true);
         }}
-        customStyles={leadStyles}
-      />
+        customStyles={leadStyles} />
       
       {/* Edit lead */}
       <EditLeadModal
@@ -150,5 +148,4 @@ const leadStyles = {
     </div>
   );
 };
-
 export default AllLeads;

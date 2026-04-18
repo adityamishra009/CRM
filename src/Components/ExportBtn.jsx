@@ -1,27 +1,34 @@
-import { Tooltip } from 'antd';
-import React from 'react'
+import { Tooltip } from "antd";
+import React from "react";
 import { BiExport } from "react-icons/bi";
 
-const ExportBtn = () => {
+const ExportBtn = ({ onClick }) => {
   return (
-    <div>
-      <Tooltip title="Export" placement="top">
-        <button  
-          className="flex items-center gap-[6px]
-                     px-4 py-2.5
-                     rounded-md
-                     bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]
-                     text-white
-                     cursor-pointer
-                     transition-all duration-200
-                     hover:brightness-90
-                     w-full sm:w-auto"
-        >
-          <BiExport size={18} />
-        </button>
-      </Tooltip>
-    </div>
-  )
-}
+    <Tooltip title="Export" placement="top">
+      <button
+        onClick={onClick}
+        className="
+          flex items-center justify-center gap-1.5
+          px-3 py-2 text-xs
+          sm:px-2.5 sm:py-1.5 sm:text-xs
+          md:px-3 md:py-2 md:text-sm
+          rounded-md border-none
+          text-white whitespace-nowrap cursor-pointer "
+  
+        style={{
+          background:
+            "linear-gradient(90deg, var(--color-primary-1), var(--color-primary-2))",
+          transition: "0.2s",
+        }}
+        onMouseEnter={(e) =>
+          (e.currentTarget.style.filter = "brightness(0.85)")
+        }
+        onMouseLeave={(e) => (e.currentTarget.style.filter = "none")}
+      >
+        <BiExport size={16} />
+      </button>
+    </Tooltip>
+  );
+};
 
 export default ExportBtn;

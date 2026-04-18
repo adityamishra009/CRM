@@ -60,7 +60,7 @@ const Dashboard = () => {
     <div
       style={{
         padding: "16px",
-        background: "#f5f7fb",
+        background: "white",
         minHeight: "100vh",
       }}
     >

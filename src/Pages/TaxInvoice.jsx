@@ -85,9 +85,11 @@ const TaxInvoice = () => {
     const calc = () => {
       if (headerRef.current) {
         const hh = headerRef.current.getBoundingClientRect().height;
-        setScrollH(`calc(100vh - ${hh + 78}px)`);
+        setScrollH(`calc(100% - ${hh}px)`);
       }
     };
+
+
     const t = setTimeout(calc, 50);
     window.addEventListener("resize", calc);
     return () => { clearTimeout(t); window.removeEventListener("resize", calc); };
@@ -167,14 +169,20 @@ const TaxInvoice = () => {
   // ── LIST VIEW ──────────────────────────────────────────────────────────────
   if (view === "list") {
     return (
+      <div className="mt-1  p-3 sm:p-4 rounded-lg shadow-sm overflow-hidden">
       <div style={{
-        display: "flex", flexDirection: "column",
-        height: "100vh", overflow: "hidden",
-        padding: "16px 20px 12px", boxSizing: "border-box",
-      }}>
+  display: "flex",
+  flexDirection: "column",
+  height: "100%",     // ✅ ADD THIS
+  overflow: "hidden",
+  padding: "0px 0px 12px",
+}}>
+
+
+
         <div ref={headerRef} style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          flexWrap: "wrap", gap: "10px", marginBottom: "12px", flexShrink: 0,
+          flexWrap: "wrap", gap: "10px", marginBottom: "12px", flexShrink: 0, marginTop: "0px",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <BackButton/>
@@ -218,12 +226,13 @@ const TaxInvoice = () => {
           />
         </div>
       </div>
+      </div>
     );
   }
 
   // ── FORM VIEW ──────────────────────────────────────────────────────────────
   return (
-    <div style={{ padding: "16px 20px", height: "100vh", overflowY: "auto", boxSizing: "border-box" }}>
+    <div style={{ padding: "16px 20px", minHeight: "100%", overflowY: "auto", boxSizing: "border-box" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
         <PrevBtn onClick={() => setView("list")}/>
         <h2 style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: 0 }}>

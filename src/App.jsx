@@ -8,6 +8,7 @@ import TaxInvoice from "./Pages/TaxInvoice";
 import Login from "./Pages/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Profile from "./Components/Profile"
 
 function App() {
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
@@ -46,6 +47,7 @@ function App() {
           <Route path="employees" element={<AllEmployees />} />
           <Route path="customers" element={<AllCustomers />} />
           <Route path="invoice" element={<TaxInvoice />} />
+           <Route path="profile" element={<Profile />} /> 
         </Route>
 
         {/* ✅ fallback */}

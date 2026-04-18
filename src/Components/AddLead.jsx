@@ -33,10 +33,10 @@ const AddLead = ({ onAddLead }) => {
         onCancel={handleClose}
         footer={null}
         centered
+        className="mb-3"
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="grid grid-cols-2 gap-4">
 
-          <div className="mb-3">
             <InputField
               control={control}
               errors={errors}
@@ -45,9 +45,7 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Lead ID"
               required
             />
-          </div>
 
-          <div className="mb-3">
             <InputField
               control={control}
               errors={errors}
@@ -56,9 +54,7 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Date"
               required
             />
-          </div>
 
-          <div className="mb-3 mt-5">
             <InputField
               control={control}
               errors={errors}
@@ -67,9 +63,7 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Name"
               required
             />
-          </div>
 
-          <div className="mb-3">
             <InputField
               control={control}
               errors={errors}
@@ -78,9 +72,7 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Mobile"
               required
             />
-          </div>
 
-          <div className="mb-3">
             <InputField
               control={control}
               errors={errors}
@@ -89,9 +81,7 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Email"
               required
             />
-          </div>
 
-          <div className="mb-3">
             <InputField
               control={control}
               errors={errors}
@@ -100,9 +90,7 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Service"
               required
             />
-          </div>
 
-          <div className="mb-3">
             <InputField
               control={control}
               errors={errors}
@@ -111,9 +99,7 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Sales Status"
               required
             />
-          </div>  
 
-          <div className="mb-3">
             <InputField
               control={control}
               errors={errors}
@@ -122,9 +108,7 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Operation Status"
               required
             />
-          </div>
 
-          <div className="mb-3">
             <InputField
               control={control}
               errors={errors}
@@ -133,12 +117,14 @@ const AddLead = ({ onAddLead }) => {
               placeholder="Enter Payments"
               required
             />
-          </div>
 
-          <Button className="mt-3 bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!" 
-          type="primary" htmlType="submit" block>
-            Add Lead
-          </Button>
+
+          <div className="col-span-2">
+            <Button className="mt-3 bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!" 
+            type="primary" htmlType="submit" block>
+              Add Lead
+            </Button>
+          </div>
         </form>
       </Modal>
     </div>

@@ -19,51 +19,105 @@ const EditLeadModal = ({ open, onClose, selectedRow, onUpdate, onDelete }) => {
   }, [selectedRow, reset]);
 
   return (
-    <Modal title="Edit Lead" open={open} onCancel={onClose} footer={null}>
-      <form onSubmit={handleSubmit(onUpdate)}>
+    <Modal 
+     title="Edit Lead" 
+     open={open} 
+     onCancel={onClose} 
+     footer={null}
+     centered
+     className="mb-3"
+    >
+      <form onSubmit={handleSubmit(onUpdate)} className="grid grid-cols-2 gap-4">
         
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="leadId" label="Lead ID" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="leadId" 
+          label="Lead ID" 
+          required
+        />
 
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="date" label="Date" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="date" 
+          type="date" 
+          label="Date" 
+          required 
+        />
 
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="name" label="Name" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="name" 
+          label="Name" 
+          required
+        />
 
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="mobileNumber" label="Mobile" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="mobileNumber" 
+          label="Mobile" 
+          required
+        />
 
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="emailId" label="Email" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="emailId" 
+          label="Email" 
+          required 
+        />
 
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="serviceCategary" label="Service" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="serviceCategary" 
+          label="Service" 
+          required 
+        />
 
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="salesStatus" label="Sales Status" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="salesStatus" 
+          label="Sales Status" 
+          required 
+        />
 
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="operationStatus" label="Operation Status" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="operationStatus" 
+          label="Operation Status" 
+          required 
+        />
 
-        <div className="mb-3">
-          <InputField control={control} errors={errors} name="totalPayments" label="Total Payments" required />
-        </div>
+        <InputField 
+          control={control} 
+          errors={errors} 
+          name="totalPayments" 
+          label="Total Payments" 
+          required 
+        />
 
-        <div className="flex gap-2 mt-3">
-          <Button type="primary" htmlType="submit" block>
+        <div className="flex gap-2 col-span-2">
+          <Button 
+           type="primary" 
+           htmlType="submit" 
+           block
+           className="bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]! text-white! hover:scale-105! border-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))]!"
+          >
             Update
           </Button>
 
-          <Button danger onClick={onDelete} block>
+          <Button 
+           danger 
+           onClick={onDelete} 
+           block
+           className="hover:scale-105!"
+          >
             Delete
           </Button>
         </div>
