@@ -31,13 +31,18 @@ const Navbar = ({setOpen}) => {
   const handleSearch = () => {
     console.log("Search Value:", search);
     // yaha tum filter ya API call kar sakte ho
-  }; 
+  };
 
   const items = [
   {
     key: "1",
-    label: <span onClick={() => navigate("/profile")}
-        className="cursor-pointer">Profile</span>,
+    label: 
+      <span 
+        onClick={() => navigate("/profile")}
+        className="flex cursor-pointer gap-1">
+        <span><CgProfile size={20}/></span>
+        <span className="font-semibold">Profile</span>
+      </span>,
   },]
 
   return (
@@ -51,29 +56,32 @@ const Navbar = ({setOpen}) => {
             <Menu size={24}/>
           </div>
 
-          <div>
-            {/* ✅ Search UI */}
+          <div className="relative">
             {showSearch && (
-              <input
-               type="text"
-               placeholder="Search..."
-               className="px-2 py-1 rounded border outline-none placeholder:text-white text-white"
-               value={search}
-               onChange={(e) => setSearch(e.target.value)}
-              />
+              <>
+               <FiSearch
+                 size={16}
+                 className="absolute left-2 top-1/2 -translate-y-1/2 text-white"
+                />
+
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="pl-7 pr-2 py-1 rounded border outline-none placeholder:text-white text-white bg-transparent"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </>
             )}
 
-            <button
-              onClick={() => {
-                if (showSearch) {
-                  handleSearch();
-                }
-                setShowSearch(true);
-              }}
-              className="cursor-pointer "
-            >
-              <FiSearch size={24} />
-            </button>
+            {!showSearch && (
+              <button
+                onClick={() => setShowSearch(true)}
+                className="cursor-pointer"
+              >
+               <FiSearch size={24} />
+              </button>
+            )}
           </div>
         </div>
 

@@ -2,7 +2,8 @@ import React from "react";
 import InputField from "../Components/fields/InputField";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-                                                  
+import BackButton from "../Components/BackButton"
+
 const Profile = () => {
   const {
     control,
@@ -25,10 +26,11 @@ const Profile = () => {
   };
 
   return (
-    <div className="mt-5 bg-yellow-50 p-4 rounded shadow-sm max-w-2xl mx-auto">
+    <div className="mt-1 p-3 rounded shadow-sm mx-auto">
       
       {/* Heading */}
-      <div className="text-center mb-10">
+      <div className="flex gap-2 mb-10">
+        <BackButton/>
         <h1 className="font-semibold text-2xl">User Details</h1>
       </div>
 
