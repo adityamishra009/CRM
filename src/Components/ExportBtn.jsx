@@ -7,25 +7,19 @@ const ExportBtn = ({ onClick }) => {
     <Tooltip title="Export" placement="top">
       <button
         onClick={onClick}
-        className="
-          flex items-center justify-center gap-1.5
-          px-3 py-2 text-xs
-          sm:px-2.5 sm:py-1.5 sm:text-xs
-          md:px-3 md:py-2 md:text-sm
-          rounded-md border-none
-          text-white whitespace-nowrap cursor-pointer "
-  
+        className="flex items-center justify-center gap-1
+                   px-3 py-2.5 sm:px-4 sm:py-2.5
+                   rounded-md
+                   text-white text-sm sm:text-base
+                   whitespace-nowrap cursor-pointer
+                   transition-all duration-200
+                   hover:brightness-90"
         style={{
           background:
-            "linear-gradient(90deg, var(--color-primary-1), var(--color-primary-2))",
-          transition: "0.2s",
+            "linear-gradient(to right, var(--color-primary-1), var(--color-primary-2))",
         }}
-        onMouseEnter={(e) =>
-          (e.currentTarget.style.filter = "brightness(0.85)")
-        }
-        onMouseLeave={(e) => (e.currentTarget.style.filter = "none")}
       >
-        <BiExport size={16} />
+        <BiExport className="text-sm sm:text-base" />
       </button>
     </Tooltip>
   );

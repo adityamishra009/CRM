@@ -89,7 +89,6 @@ const TaxInvoice = () => {
       }
     };
 
-
     const t = setTimeout(calc, 50);
     window.addEventListener("resize", calc);
     return () => { clearTimeout(t); window.removeEventListener("resize", calc); };
@@ -173,12 +172,10 @@ const TaxInvoice = () => {
       <div style={{
   display: "flex",
   flexDirection: "column",
-  height: "100%",     // ✅ ADD THIS
+  height: "100%",
   overflow: "hidden",
   padding: "0px 0px 12px",
 }}>
-
-
 
         <div ref={headerRef} style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -232,74 +229,90 @@ const TaxInvoice = () => {
 
   // ── FORM VIEW ──────────────────────────────────────────────────────────────
   return (
-    <div style={{ padding: "16px 20px", minHeight: "100%", overflowY: "auto", boxSizing: "border-box" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
-        <PrevBtn onClick={() => setView("list")}/>
-        <h2 style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: 0 }}>
-          Create Tax Invoice
-        </h2>
-      </div>
+    <>
+      <style>{`
+        .ti-grid-3 {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 16px;
+        }
+        @media (max-width: 768px) {
+          .ti-grid-3 { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+          .ti-grid-3 { grid-template-columns: 1fr; }
+        }
+      `}</style>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-
-        {/* Customer */}
-        <InputField control={control} errors={errors} name="customer" label="Customer" />
-
-        {/* Products */}
-        <Card className="!p-4">
-          <InputField control={control} errors={errors} name="products"
-            type="select" mode="multiple" label="Select Products"
-            options={[
-              { label: "Product 1", value: "1" },
-              { label: "Product 2", value: "2" },
-              { label: "Product 3", value: "3" },
-            ]}
-          />
-          <p className="text-xs text-gray-500 mt-1">Select products to set quantity, rate and stock used.</p>
-        </Card>
-
-        {/* Row: Date | Payment Mode | Sales Person */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
-          <InputField control={control} errors={errors} name="date" type="date" label="Date" />
-          <InputField control={control} errors={errors} name="paymentMode" type="option" label="Mode/Terms of Payment"
-            options={[{ label: "Cash", value: "cash" }, { label: "Bank", value: "bank" }, { label: "UPI", value: "upi" }]} />
-          <InputField control={control} errors={errors} name="salesPerson" label="Sales Person" />
-        </div>
-
-        {/* Row: Dispatched Through | Destination | Reminder Date */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
-          <InputField control={control} errors={errors} name="dispatch" label="Dispatched Through" />
-          <InputField control={control} errors={errors} name="destination" label="Destination" />
-          <InputField control={control} errors={errors} name="reminderDate" type="date" label="Reminder Date" />
-        </div>
-
-        {/* Terms of Delivery */}
-        <InputField control={control} errors={errors} name="terms" type="description" label="Terms of Delivery" rows={3} />
-
-        {/* Row: Tax Type | PO Number | PO Date */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
-          <InputField control={control} errors={errors} name="taxType" type="option" label="Tax Type"
-            options={[{ label: "GST", value: "gst" }]} />
-          <InputField control={control} errors={errors} name="poNumber" label="PO Number" />
-          <InputField control={control} errors={errors} name="poDate" type="date" label="PO Date" />
-        </div>
-
-        {/* Row: Freight | Previous Balance | Received Amount */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "16px" }}>
-          <InputField control={control} errors={errors} name="freight" type="numeric" label="Freight & Cartage Amount" />
-          <InputField control={control} errors={errors} name="previousBalance" type="numeric" label="Previous Balance" />
-          <InputField control={control} errors={errors} name="received" type="numeric" label="Received Amount" />
-        </div>
-
-        <div className="pt-4 pb-8">
-          <Button htmlType="submit" type="primary"
-            className="!bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] !border-none !text-white px-6 py-2 rounded-md">
+      <div style={{ padding: "16px 20px", minHeight: "100%", overflowY: "auto", boxSizing: "border-box" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+          <PrevBtn onClick={() => setView("list")}/>
+          <h2 style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: 0 }}>
             Create Tax Invoice
-          </Button>
+          </h2>
         </div>
 
-      </form>
-    </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+
+          {/* Customer */}
+          <InputField control={control} errors={errors} name="customer" label="Customer" />
+
+          {/* Products */}
+          <Card className="!p-4">
+            <InputField control={control} errors={errors} name="products"
+              type="select" mode="multiple" label="Select Products"
+              options={[
+                { label: "Product 1", value: "1" },
+                { label: "Product 2", value: "2" },
+                { label: "Product 3", value: "3" },
+              ]}
+            />
+            <p className="text-xs text-gray-500 mt-1">Select products to set quantity, rate and stock used.</p>
+          </Card>
+
+          {/* Row: Date | Payment Mode | Sales Person */}
+          <div className="ti-grid-3">
+            <InputField control={control} errors={errors} name="date" type="date" label="Date" />
+            <InputField control={control} errors={errors} name="paymentMode" type="option" label="Mode/Terms of Payment"
+              options={[{ label: "Cash", value: "cash" }, { label: "Bank", value: "bank" }, { label: "UPI", value: "upi" }]} />
+            <InputField control={control} errors={errors} name="salesPerson" label="Sales Person" />
+          </div>
+
+          {/* Row: Dispatched Through | Destination | Reminder Date */}
+          <div className="ti-grid-3">
+            <InputField control={control} errors={errors} name="dispatch" label="Dispatched Through" />
+            <InputField control={control} errors={errors} name="destination" label="Destination" />
+            <InputField control={control} errors={errors} name="reminderDate" type="date" label="Reminder Date" />
+          </div>
+
+          {/* Terms of Delivery */}
+          <InputField control={control} errors={errors} name="terms" type="description" label="Terms of Delivery" rows={3} />
+
+          {/* Row: Tax Type | PO Number | PO Date */}
+          <div className="ti-grid-3">
+            <InputField control={control} errors={errors} name="taxType" type="option" label="Tax Type"
+              options={[{ label: "GST", value: "gst" }]} />
+            <InputField control={control} errors={errors} name="poNumber" label="PO Number" />
+            <InputField control={control} errors={errors} name="poDate" type="date" label="PO Date" />
+          </div>
+
+          {/* Row: Freight | Previous Balance | Received Amount */}
+          <div className="ti-grid-3">
+            <InputField control={control} errors={errors} name="freight" type="numeric" label="Freight & Cartage Amount" />
+            <InputField control={control} errors={errors} name="previousBalance" type="numeric" label="Previous Balance" />
+            <InputField control={control} errors={errors} name="received" type="numeric" label="Received Amount" />
+          </div>
+
+          <div className="pt-4 pb-8">
+            <Button htmlType="submit" type="primary"
+              className="!bg-[linear-gradient(to_right,var(--color-primary-1),var(--color-primary-2))] !border-none !text-white px-6 py-2 rounded-md">
+              Create Tax Invoice
+            </Button>
+          </div>
+
+        </form>
+      </div>
+    </>
   );
 };
 

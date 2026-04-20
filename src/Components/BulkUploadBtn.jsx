@@ -7,7 +7,7 @@ const BulkUploadBtn = ({ onClick }) => {
       onClick={onClick}
       className="
         flex items-center justify-center gap-1.5
-        px-3 py-2 text-xs
+        px-2.5 py-2 text-xs
         sm:px-2.5 sm:py-1.5 sm:text-xs
         md:px-3 md:py-2 md:text-sm
         rounded-md border-none

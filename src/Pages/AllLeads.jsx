@@ -106,19 +106,24 @@ const leadStyles = {
   return (
     <div className="mt-1  p-3 sm:p-4 rounded-lg shadow-sm">
       {/* Header */}
-     <div className="flex justify-between items-center mb-3 flex-wrap gap-2">
-  <div className="flex gap-2 items-center">
+     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+  
+  {/* Left Side */}
+  <div className="flex items-center gap-2">
     <BackButton />
-    <h1 className="text-xl font-semibold">Leads</h1>
+    <h1 className="text-lg sm:text-xl font-semibold">Leads</h1>
   </div>
 
-  <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-end w-full sm:w-auto">
+  {/* Right Side Buttons */}
+  <div className="flex flex-wrap gap-2 sm:justify-end">
     <FilterLead />
     <BulkUploadBtn />
     <AddLead onAddLead={handleAddLead} />
     <ExportBtn />
-        </div>
-            </div>
+  </div>
+
+</div>
+
       {/* Table */}
       <DataTable
         columns={columns}

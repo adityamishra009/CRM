@@ -2,7 +2,7 @@ import React from "react";
 import InputField from "../Components/fields/InputField";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-                                                   //profile form
+                                                  
 const Profile = () => {
   const {
     control,

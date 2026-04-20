@@ -33,30 +33,37 @@ const OptionField = ({
         name={name}
         defaultValue={defaultValue} // Set the default value here
         render={({ field: { onChange, onBlur, value, ref } }) => (
-          <Select
-            placeholder={placeholder}
-            onChange={(selectedOption) => {
-              onChange(selectedOption ? selectedOption : null);
-              onSelectChange(selectedOption);
-            }}
-            onBlur={onBlur}
-            disabled={disabled}
-            ref={ref}
-            className={`w-full custom-select border-[#6E6E6E] ${
-              disabled ? "" : "bg-white"
-            } custom-select rounded-sm disabled:border ${className}`}
-            value={value}
-          >
-            {options.map((item, index) => (
-              <Select.Option
-                key={index}
-                value={item.value}
-                className="capitalize"
-              >
-                {item.label}
-              </Select.Option>
-            ))}
-          </Select>
+      <Select
+  placeholder={placeholder}
+  onChange={(selectedOption) => {
+    onChange(selectedOption ? selectedOption : null);
+    onSelectChange(selectedOption);
+  }}
+  onBlur={onBlur}
+  disabled={disabled}
+  ref={ref}
+  value={value}
+  optionLabelProp="label"   // 👈 ADD THIS
+  style={{
+    width: "100%",
+    border: "1px solid black",
+    borderRadius: "6px",
+    padding: "4px"
+  }}
+>
+  {options.map((item, index) => (
+    <Select.Option
+      key={index}
+      value={item.value}
+      label={item.label}                
+      style={{ color: "black" }}         
+      className="capitalize"
+    >
+      {item.label}
+    </Select.Option>
+  ))}
+</Select>
+
         )}
       />
       {errors[name] && <p className="text-red-500">{errors[name]?.message}</p>}
