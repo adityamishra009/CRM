@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import AddEmployee from "../Components/AddEmployee";
 import FilterEmployee from "../Components/FilterEmployee";
 import DataTable from "react-data-table-component/dist/index.es.js";
-import BackButton from "../Components/BackButton";
-import EditEmployeeModal from "../Components/EditEmployeeModal";
+import EmployeeHeader from "../Components/EmployeeHeader"; // ✅ added
+import EditEmployeeModal from "../Components/EditEmployeeModal"
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 
@@ -28,7 +28,6 @@ const AllEmployee = () => {
   const [editOpen, setEditOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  // ✅ Add
   const handleAddEmployee = (values) => {
     const newEmployee = {
       id: data.length + 1,
@@ -37,7 +36,6 @@ const AllEmployee = () => {
     setData([...data, newEmployee]);
   };
 
-  // ✅ Update
   const handleUpdate = (updatedData) => {
     if (!selectedRow) return;
 
@@ -51,52 +49,49 @@ const AllEmployee = () => {
     setSelectedRow(null);
   };
 
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setData(data.filter((item) => item.id !== id));
 
- // ✅ Delete
-const handleDelete = (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#3085d6",
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      setData(data.filter((item) => item.id !== id));
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your record has been deleted.",
+          icon: "success",
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    });
+  };
 
-      Swal.fire({
-        title: "Deleted!",
-        text: "Your record has been deleted.",
-        icon: "success",
-        timer: 1500,
-        showConfirmButton: false,
-      });
-    }
-  });
-};
-
-const employeeStyles = {
-  headRow: {
-    style: {
-      background: "black",
-      borderTopRightRadius: "10px",
-      borderTopLeftRadius: "10px",
-      overflow: "hidden",
+  const employeeStyles = {
+    headRow: {
+      style: {
+        background: "black",
+        borderTopRightRadius: "10px",
+        borderTopLeftRadius: "10px",
+        overflow: "hidden",
+      },
     },
-  },
-  headCells: {
-    style: {
-      color: "white",
-      fontWeight: "600",
-      textTransform: "uppercase",
-      fontSize: "14px",
+    headCells: {
+      style: {
+        color: "white",
+        fontWeight: "600",
+        textTransform: "uppercase",
+        fontSize: "14px",
+      },
     },
-  },
-};
+  };
 
-  // ✅ Columns (NO Edit Button)
   const columns = [
     {
       name: "Name",
@@ -143,18 +138,9 @@ const employeeStyles = {
 
   return (
     <div className="mt-1 bg-white p-3 sm:p-4 rounded-lg shadow-sm">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-3">
-        <div className="flex gap-2 items-center">
-            <BackButton />
-          <h1 className="text-xl font-semibold">Employee</h1>
-        </div>
 
-        <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-          <AddEmployee onAddEmployee={handleAddEmployee} />
-          <FilterEmployee />
-        </div>
-      </div>
+      {/* ✅ Replaced Header */}
+      <EmployeeHeader onAddEmployee={handleAddEmployee} />
 
       {/* Table */}
       <DataTable

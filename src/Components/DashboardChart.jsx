@@ -33,32 +33,19 @@ const days = Array.from({ length: 31 }, (_, i) => ({
 }));
 
 const ChartCard = ({ title, children }) => (
-  <div
-    style={{
-      background: "#fff",
-      borderRadius: "10px",
-      padding: "16px",
-      boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-      height: "100%",
-    }}
-  >
-    <h3 style={{ marginBottom: "10px", fontWeight: 600 }}>{title}</h3>
+  <div className="bg-white rounded-[10px] p-4 shadow-[0_2px_6px_rgba(0,0,0,0.05)] h-full">
+    <h3 className="mb-[10px] font-semibold">{title}</h3>
     {children}
   </div>
 );
 
 const DashboardCharts = () => {
   return (
-    <div style={{ marginTop: "20px" }}>
-      
+    <div className="mt-5">
+
       {/* TOP CHARTS (RESPONSIVE GRID) */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-          gap: "16px",
-        }}
-      >
+      <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+
         {/* Leads */}
         <ChartCard title="Month On Month Leads">
           <ResponsiveContainer width="100%" height={250}>
@@ -67,12 +54,7 @@ const DashboardCharts = () => {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="leads"
-                stroke="#1677ff"
-                fill="#1677ff33"
-              />
+              <Area type="monotone" dataKey="leads" stroke="#1677ff" fill="#1677ff33" />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
@@ -85,19 +67,15 @@ const DashboardCharts = () => {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="closure"
-                stroke="#52c41a"
-                fill="#52c41a33"
-              />
+              <Area type="monotone" dataKey="closure" stroke="#52c41a" fill="#52c41a33" />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
+
       </div>
 
       {/* DAY WISE LEADS */}
-      <div style={{ marginTop: "16px" }}>
+      <div className="mt-4">
         <ChartCard title="Day Wise Leads">
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={days}>
@@ -105,19 +83,14 @@ const DashboardCharts = () => {
               <XAxis dataKey="day" />
               <YAxis />
               <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="leads"
-                stroke="#1677ff"
-                strokeWidth={2}
-              />
+              <Line type="monotone" dataKey="leads" stroke="#1677ff" strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         </ChartCard>
       </div>
 
       {/* DAY WISE REVENUE */}
-      <div style={{ marginTop: "16px" }}>
+      <div className="mt-4">
         <ChartCard title="Day Wise Revenue">
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={days}>
@@ -125,16 +98,12 @@ const DashboardCharts = () => {
               <XAxis dataKey="day" />
               <YAxis />
               <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="revenue"
-                stroke="#52c41a"
-                fill="#52c41a33"
-              />
+              <Area type="monotone" dataKey="revenue" stroke="#52c41a" fill="#52c41a33" />
             </AreaChart>
           </ResponsiveContainer>
         </ChartCard>
       </div>
+
     </div>
   );
 };

@@ -37,39 +37,24 @@ const existingInvoices = [
 
 const ServiceCell = ({ value }) => (
   <Tooltip title={value} placement="topLeft" mouseEnterDelay={0.3}>
-    <span style={{
-      display: "block",
-      overflow: "hidden",
-      whiteSpace: "nowrap",
-      textOverflow: "ellipsis",
-      fontSize: "11.5px",
-      color: "#4b5563",
-      cursor: "default",
-      maxWidth: "100%",
-    }}>
+    <span className="block overflow-hidden whitespace-nowrap text-ellipsis text-[11.5px] text-gray-600 cursor-default max-w-full">
       {value}
     </span>
   </Tooltip>
 );
 
+const actionBtnBase =
+  "inline-flex items-center gap-[3px] text-white border-none rounded px-[7px] py-1 text-[11.5px] font-medium cursor-pointer whitespace-nowrap leading-none hover:brightness-85 transition-[filter]";
+
 const ActionButtons = ({ onPreview, onDownload, onEdit, onDelete }) => (
-  <div style={{ display: "flex", alignItems: "center", gap: "3px", flexWrap: "nowrap" }}>
+  <div className="flex items-center gap-[3px] flex-nowrap">
     {[
-      { label: "Preview",  icon: <EyeOutlined />,      bg: "#7c3aed", fn: onPreview  },
-      { label: "Download", icon: <DownloadOutlined />, bg: "#3b82f6", fn: onDownload },
-      { label: "Edit",     icon: <EditOutlined />,     bg: "#10b981", fn: onEdit     },
-      { label: "Delete",   icon: <DeleteOutlined />,   bg: "#ef4444", fn: onDelete   },
-    ].map(({ label, icon, bg, fn }) => (
-      <button key={label} onClick={fn}
-        style={{
-          display: "inline-flex", alignItems: "center", gap: "3px",
-          backgroundColor: bg, color: "#fff", border: "none", borderRadius: "4px",
-          padding: "4px 7px", fontSize: "11.5px", fontWeight: 500,
-          cursor: "pointer", whiteSpace: "nowrap", lineHeight: 1,
-        }}
-        onMouseEnter={e => e.currentTarget.style.filter = "brightness(0.85)"}
-        onMouseLeave={e => e.currentTarget.style.filter = "none"}
-      >
+      { label: "Preview",  icon: <EyeOutlined />,      cls: "bg-[#7c3aed]", fn: onPreview  },
+      { label: "Download", icon: <DownloadOutlined />, cls: "bg-[#3b82f6]", fn: onDownload },
+      { label: "Edit",     icon: <EditOutlined />,     cls: "bg-[#10b981]", fn: onEdit     },
+      { label: "Delete",   icon: <DeleteOutlined />,   cls: "bg-[#ef4444]", fn: onDelete   },
+    ].map(({ label, icon, cls, fn }) => (
+      <button key={label} onClick={fn} className={`${actionBtnBase} ${cls}`}>
         {icon} {label}
       </button>
     ))}
@@ -130,23 +115,23 @@ const TaxInvoice = () => {
   const cols = [
     {
       name: "Invoice No", selector: r => r.id, sortable: true, width: "100px",
-      cell: r => <span style={{ fontWeight: 600, fontSize: "11px", color: "#1f2937" }}>{r.id}</span>,
+      cell: r => <span className="font-semibold text-[11px] text-gray-800">{r.id}</span>,
     },
     {
       name: "Name", selector: r => r.name, sortable: true, wrap: true, width: "130px",
-      cell: r => <span style={{ fontWeight: 500, fontSize: "11px", lineHeight: "1.3" }}>{r.name}</span>,
+      cell: r => <span className="font-medium text-[11px] leading-snug">{r.name}</span>,
     },
     {
       name: "Mobile", selector: r => r.mobile, width: "100px",
-      cell: r => <span style={{ fontSize: "11px" }}>{r.mobile}</span>,
+      cell: r => <span className="text-[11px]">{r.mobile}</span>,
     },
     {
       name: "GST No", selector: r => r.gstNo, width: "130px",
-      cell: r => <span style={{ fontSize: "10.5px", fontFamily: "monospace", letterSpacing: "-0.3px" }}>{r.gstNo}</span>,
+      cell: r => <span className="text-[10.5px] font-mono tracking-tight">{r.gstNo}</span>,
     },
     {
       name: "Date", selector: r => r.date, width: "82px",
-      cell: r => <span style={{ fontSize: "11px" }}>{r.date}</span>,
+      cell: r => <span className="text-[11px]">{r.date}</span>,
     },
     {
       name: "Services", selector: r => r.services, grow: 1, minWidth: "100px",
@@ -168,61 +153,47 @@ const TaxInvoice = () => {
   // ── LIST VIEW ──────────────────────────────────────────────────────────────
   if (view === "list") {
     return (
-      <div className="mt-1  p-3 sm:p-4 rounded-lg shadow-sm overflow-hidden">
-      <div style={{
-  display: "flex",
-  flexDirection: "column",
-  height: "100%",
-  overflow: "hidden",
-  padding: "0px 0px 12px",
-}}>
+      <div className="mt-1 p-3 sm:p-4 rounded-lg shadow-sm overflow-hidden">
+        <div className="flex flex-col h-full overflow-hidden pb-3">
 
-        <div ref={headerRef} style={{
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          flexWrap: "wrap", gap: "10px", marginBottom: "12px", flexShrink: 0, marginTop: "0px",
-        }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <BackButton/>
-            <h2 style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: 0, whiteSpace: "nowrap" }}>
-              Generate Tax Invoice
-            </h2>
+          <div ref={headerRef} className="flex items-center justify-between flex-wrap gap-[10px] mb-3 flex-shrink-0">
+            <div className="flex items-center gap-[10px]">
+              <BackButton />
+              <h2 className="text-[17px] font-semibold text-gray-800 m-0 whitespace-nowrap">
+                Generate Tax Invoice
+              </h2>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              <HButton onClick={() => message.info("Tax Invoice No clicked")}>
+                <FileTextOutlined /> Tax Invoice No
+              </HButton>
+              <HButton onClick={() => setView("form")}>
+                <PlusOutlined /> Generate Invoice
+              </HButton>
+              <HButton onClick={() => message.info("Exporting…")}>
+                <ExportOutlined /> Export Excel
+              </HButton>
+              <FilterTaxInvoice />
+            </div>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-            <HButton onClick={() => message.info("Tax Invoice No clicked")}>
-              <FileTextOutlined /> Tax Invoice No
-            </HButton>
-            <HButton onClick={() => setView("form")}>
-              <PlusOutlined /> Generate Invoice
-            </HButton>
-            <HButton onClick={() => message.info("Exporting…")}>
-              <ExportOutlined /> Export Excel
-            </HButton>
-           <FilterTaxInvoice/>
+
+          <div className="flex-1 min-h-0 rounded-lg overflow-hidden border border-gray-200 shadow-sm">
+            <DataTable
+              columns={cols}
+              data={existingInvoices}
+              pagination
+              paginationPerPage={10}
+              striped
+              highlightOnHover
+              fixedHeader
+              fixedHeaderScrollHeight={scrollH}
+              customStyles={tStyles}
+              noDataComponent={
+                <div className="py-10 text-gray-400 text-[13px]">No invoices found.</div>
+              }
+            />
           </div>
         </div>
-
-        <div style={{
-          flex: 1, minHeight: 0,
-          borderRadius: "8px", overflow: "hidden",
-          border: "1px solid #e5e7eb",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.07)",
-        }}>
-          <DataTable
-            columns={cols}
-            data={existingInvoices}
-            pagination
-            paginationPerPage={10}
-            striped
-            highlightOnHover
-            fixedHeader
-            fixedHeaderScrollHeight={scrollH}
-            customStyles={tStyles}
-            noDataComponent={
-              <div style={{ padding: "40px", color: "#9ca3af", fontSize: "13px" }}>No invoices found.</div>
-            }
-          />
-        </div>
-      </div>
       </div>
     );
   }
@@ -244,10 +215,10 @@ const TaxInvoice = () => {
         }
       `}</style>
 
-      <div style={{ padding: "16px 20px", minHeight: "100%", overflowY: "auto", boxSizing: "border-box" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
-          <PrevBtn onClick={() => setView("list")}/>
-          <h2 style={{ fontSize: "17px", fontWeight: 600, color: "#1f2937", margin: 0 }}>
+      <div className="px-5 py-4 min-h-full overflow-y-auto box-border">
+        <div className="flex items-center gap-[10px] mb-5">
+          <PrevBtn onClick={() => setView("list")} />
+          <h2 className="text-[17px] font-semibold text-gray-800 m-0">
             Create Tax Invoice
           </h2>
         </div>

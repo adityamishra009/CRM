@@ -7,8 +7,7 @@ import {
 
 import RecentLeadsTable from "../Components/RecentLeadsTable";
 import TopCustomersTable from "../Components/TopCustomersTable";
-
-import DashboardChart from "../Components/DashboardChart"
+import DashboardChart from "../Components/DashboardChart";
 
 const Dashboard = () => {
   const stats = [
@@ -34,13 +33,6 @@ const Dashboard = () => {
       gradient: "linear-gradient(135deg, #52c41a, #95de64)",
     },
     {
-      title: "Monthly Leads",
-      value: 0,
-      change: "0%",
-      icon: <CalendarOutlined />,
-      gradient: "linear-gradient(135deg, #722ed1, #b37feb)",
-    },
-    {
       title: "Yesterday's NCBucket Leads",
       value: 0,
       change: "0%",
@@ -57,80 +49,41 @@ const Dashboard = () => {
   ];
 
   return (
-    <div
-      style={{
-        padding: "16px",
-        background: "white",
-        minHeight: "100vh",
-      }}
-    >
+    <div className="p-4 bg-[#f5f7fa] min-h-screen">
+
       {/* HEADER */}
-      <h2 style={{ marginBottom: "14px", fontWeight: 600 }}>
-        Leads (77,076)
-      </h2>
+      <h2 className="mb-4 font-semibold">Leads (77,076)</h2>
 
       {/* CARDS */}
-      <Row gutter={[12, 12]}>
+      <Row gutter={[16, 16]}>
         {stats.map((item, index) => (
-          <Col xs={24} sm={12} md={12} lg={8} key={index}>
+          <Col
+            xs={24}
+            sm={12}
+            md={8}
+            lg={8}
+            xl={6}
+            key={index}
+            className="flex"
+          >
             <Card
               bordered={false}
+              className="!rounded-xl !w-full !text-white"
               style={{
-                borderRadius: "12px",
                 background: item.gradient,
-                color: "#fff",
                 boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
               }}
               bodyStyle={{ padding: "16px" }}
             >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                
-                {/* ICON */}
-                <div
-                  style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "8px",
-                    background: "rgba(255,255,255,0.2)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "16px",
-                    marginRight: "12px",
-                  }}
-                >
+              <div className="flex items-center">
+                <div className="w-9 h-9 rounded-lg bg-white/20 flex items-center justify-center text-base mr-3">
                   {item.icon}
                 </div>
 
-                {/* TEXT */}
                 <div>
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      opacity: 0.9,
-                    }}
-                  >
-                    {item.title}
-                  </div>
-
-                  <div
-                    style={{
-                      fontSize: "24px",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {item.value}
-                  </div>
-
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      marginTop: "2px",
-                      opacity: 0.85,
-                    }}
-                  >
-                    {item.change}
-                  </div>
+                  <div className="text-[13px] opacity-90">{item.title}</div>
+                  <div className="text-2xl font-bold">{item.value}</div>
+                  <div className="text-xs mt-[2px] opacity-85">{item.change}</div>
                 </div>
               </div>
             </Card>
@@ -138,16 +91,24 @@ const Dashboard = () => {
         ))}
       </Row>
 
-      {/* TABLES */}
-      <div style={{ marginTop: "16px" }}>
-        <RecentLeadsTable />
+      {/* FULL WIDTH CONTENT */}
+      <div className="mt-6">
+        <Card className="!rounded-xl">
+          <RecentLeadsTable />
+        </Card>
       </div>
 
-      <div style={{ marginTop: "16px" }}>
-        <TopCustomersTable />
+      <div className="mt-6">
+        <Card className="!rounded-xl">
+          <TopCustomersTable />
+        </Card>
       </div>
 
-         <DashboardChart/>
+      <div className="mt-6">
+        <Card className="!rounded-xl">
+          <DashboardChart />
+        </Card>
+      </div>
 
     </div>
   );
